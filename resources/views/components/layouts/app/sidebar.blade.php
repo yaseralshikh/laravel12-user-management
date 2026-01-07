@@ -14,6 +14,9 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    @role('superadmin')
+                        <flux:navlist.item icon="shield-check" :href="url('/laratrust')" :current="request()->is('laratrust')" wire:navigate>{{ __('Laratrust') }}</flux:navlist.item>
+                    @endrole
                 </flux:navlist.group>
             </flux:navlist>
 
