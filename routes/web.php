@@ -30,3 +30,7 @@ Route::middleware(['auth'])->group(function () {
         )
         ->name('two-factor.show');
 });
+
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.','middleware' => ['auth', 'role:admin|superadmin']], function () {
+    Volt::route('users', 'users.users-index')->name('users.index');
+});

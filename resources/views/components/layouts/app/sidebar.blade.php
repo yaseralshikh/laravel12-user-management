@@ -16,6 +16,7 @@
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     @role('superadmin')
                         <flux:navlist.item icon="shield-check" :href="url('/laratrust')" :current="request()->is('laratrust')" wire:navigate>{{ __('Laratrust') }}</flux:navlist.item>
+                        <flux:navlist.item icon="users" :href="route('dashboard.users.index')" :current="request()->is('dashboard/users')" wire:navigate>{{ __('Users') }}</flux:navlist.item>
                     @endrole
                 </flux:navlist.group>
             </flux:navlist>
