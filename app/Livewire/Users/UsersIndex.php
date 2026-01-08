@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Users;
 
-use Flux;
-use Mpdf\Mpdf;
-use App\Models\User;
-use Livewire\Component;
-use Livewire\Attributes\On;
+use \Mpdf\Output\Destination;
 use App\Exports\UsersExport;
+use App\Models\User;
+use Flux\Flux;
+use Livewire\Attributes\On;
+use Livewire\Component;
 use Livewire\WithPagination;
+use Mpdf\Mpdf;
 
 class UsersIndex extends Component
 {
@@ -113,7 +114,7 @@ class UsersIndex extends Component
 
         $fileName = 'users_' . now()->format('Ymd_His') . '.pdf';
         $filePath = public_path($fileName);
-        $mpdf->Output($filePath, \Mpdf\Output\Destination::FILE);
+        $mpdf->Output($filePath, Destination::FILE);
 
         $this->dispatch('showSuccessAlert', message: 'تم إنشاء ملف PDF بنجاح!');
 

@@ -2,15 +2,16 @@
 
 namespace App\Livewire\Users;
 
-use Livewire\Component;
-use App\Models\User;
 use App\Models\Role;
-use Flux;
+use App\Models\User;
+use Flux\Flux;
+use Livewire\Component;
 
 class UserCreate extends Component
 {
     public $name;
     public $email;
+    public $phone;
     public $password;
     public $password_confirmation;
     public $role = null; // Default role ID, assuming 1 is the user role
@@ -18,6 +19,7 @@ class UserCreate extends Component
     protected $rules = [
         'name'      => ['required', 'string', 'max:255', 'unique:users'],
         'email'     => ['required', 'email', 'max:50', 'unique:users'],
+        'phone'     => ['string', 'max:12'],
         'password'  => ['required', 'min:8', 'confirmed'],
         'role'      => ['required', 'exists:roles,id'], // Assuming role is passed as ID
     ];
@@ -31,6 +33,8 @@ class UserCreate extends Component
         'email.email' => 'The email must be a valid email address.',
         'email.unique' => 'The email has already been taken.',
         'email.max' => 'The email must not exceed 50 characters.',
+        'phone.string' => 'The phone must be a string.',
+        'phone.max' => 'The phone must not exceed 12 characters.',
         'password.required' => 'The password is required.',
         'password.min' => 'The password must be at least 8 characters.',
         'password.confirmed' => 'The password confirmation does not match.',

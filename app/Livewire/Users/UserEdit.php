@@ -2,17 +2,18 @@
 
 namespace App\Livewire\Users;
 
-use Flux;
 use App\Models\Role;
 use App\Models\User;
-use Livewire\Component;
+use Flux\Flux;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
 class UserEdit extends Component
 {
     public $userId;
     public $name;
     public $email;
+    public $phone;
     public $password;
     public $password_confirmation;
     public $role = null; // Default role ID, assuming 1 is the user role
@@ -22,6 +23,7 @@ class UserEdit extends Component
         return [
             'name' => ['required', 'string', 'max:255', 'unique:users,name,' . $this->userId],
             'email' => ['required', 'email', 'max:50', 'unique:users,email,' . $this->userId],
+            'phone' => ['string', 'max:12'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'], // Allow password to be nullable
             'role' => ['required', 'exists:roles,id'],
         ];
@@ -34,6 +36,8 @@ class UserEdit extends Component
         'email.required' => 'The email is required.',
         'email.email' => 'The email must be a valid email address.',
         'email.max' => 'The email must not exceed 50 characters.',
+        'phone.string' => 'The phone must be a string.',
+        'phone.max' => 'The phone must not exceed 12 characters.',
         'password.min' => 'The password must be at least 8 characters.',
         'password.confirmed' => 'The password confirmation does not match.',
         'role.required' => 'The role is required.',
@@ -51,6 +55,7 @@ class UserEdit extends Component
 
         $this->name = $user['name'];
         $this->email = $user['email'];
+        $this->phone = $user['phone'];
         $this->userId = $user['id'];
         $this->role = $user['roles'][0]['id'] ?? null;
         Flux::modal('edit-user')->show();
@@ -68,6 +73,7 @@ class UserEdit extends Component
             $user->update([
                 'name'     => $this->name,
                 'email'    => $this->email,
+                'phone'    => $this->phone,
                 'password' => $this->password ?? $user->password,
             ]);
 

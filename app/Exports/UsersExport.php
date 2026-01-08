@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use \PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\User;
@@ -14,15 +15,16 @@ class UsersExport
         $sheet = $spreadsheet->getActiveSheet();
 
         // رؤوس الأعمدة
-        $sheet->getStyle('A1:C1')->getFill()->setFillType('solid')->getStartColor()->setRGB('FFFF00');
-        $sheet->getStyle('A1:C1')->getAlignment()->setHorizontal('center');
-        $sheet->getStyle('A1:C1')->getAlignment()->setVertical('center');
-        $sheet->getStyle('A1:C1')->getFont()->setBold(true)->setSize(12);
+        $sheet->getStyle('A1:D1')->getFill()->setFillType('solid')->getStartColor()->setRGB('FFFF00');
+        $sheet->getStyle('A1:D1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A1:D1')->getAlignment()->setVertical('center');
+        $sheet->getStyle('A1:D1')->getFont()->setBold(true)->setSize(12);
         $sheet->setCellValue('A1', 'ID');
         $sheet->setCellValue('B1', 'Name');
         $sheet->setCellValue('C1', 'Email');
+        $sheet->setCellValue('D1', 'Phone');
         // حجم الأعمدة
-        foreach (range('A', 'C') as $col) {
+        foreach (range('A', 'D') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
 
@@ -37,6 +39,7 @@ class UsersExport
             $sheet->setCellValue("A{$row}", $user->id);
             $sheet->setCellValue("B{$row}", $user->name);
             $sheet->setCellValue("C{$row}", $user->email);
+            $sheet->setCellValue("D{$row}", $user->phone);
             $row++;
         }
 
@@ -47,8 +50,8 @@ class UsersExport
         // المحاذاة في وسط الخلايا كلها
         $sheet->getStyle("A1:{$highestColumn}{$lastRow}")
             ->getAlignment()
-            ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)
-            ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+            ->setVertical(Alignment::VERTICAL_CENTER);
 
         // حفظ الملف
         $filename = 'users_' . now()->format('Ymd_His') . '.xlsx';
