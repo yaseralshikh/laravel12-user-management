@@ -121,8 +121,8 @@
 
             <flux:select wire:model.live="complexFilter" label="مجمع">
                 <option value="">كل المدارس</option>
-                <option value="1">مدرسة مجمع</option>
-                <option value="0">غير مجمع</option>
+                <option value="1">ضمن مجمع</option>
+                <option value="0">مستقلة</option>
             </flux:select>
         </div>
 
@@ -167,7 +167,7 @@
                         <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ config('schools.genders')[$school->gender] ?? $school->gender }}</td>
                         <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $school->stage }}</td>
                         <td class="px-6 py-2 text-gray-700 dark:text-gray-300">
-                            <flux:badge color="{{ $school->is_complex ? 'blue' : 'gray' }}">{{ $school->is_complex ? 'مجمع' : 'غير مجمع' }}</flux:badge>
+                            <flux:badge color="{{ $school->is_complex ? 'blue' : 'gray' }}">{{ $school->is_complex ? 'ضمن مجمع' : 'مستقلة' }}</flux:badge>
                         </td>
                         <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $school->school_type }}</td>
                         <td class="px-6 py-2 text-gray-700">
