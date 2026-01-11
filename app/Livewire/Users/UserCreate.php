@@ -19,7 +19,7 @@ class UserCreate extends Component
     protected $rules = [
         'name'      => ['required', 'string', 'max:255', 'unique:users'],
         'email'     => ['required', 'email', 'max:50', 'unique:users'],
-        'phone'     => ['string', 'max:12'],
+        'phone'     => ['nullable','string', 'max:12'],
         'password'  => ['required', 'min:8', 'confirmed'],
         'role'      => ['required', 'exists:roles,id'], // Assuming role is passed as ID
     ];

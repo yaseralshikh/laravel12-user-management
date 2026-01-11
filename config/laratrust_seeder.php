@@ -14,13 +14,21 @@ return [
     'roles_structure' => [
         'superadmin' => [
             'users' => 'c,r,u,d',
+            'schools' => 'c,r,u,d',
             'profile' => 'r,u',
         ],
         'admin' => [
             'users' => 'c,r,u,d',
             'profile' => 'r,u',
         ],
-        'user' => [
+        'supervisor' => [
+            'users' => 'c,r,u,d',
+            'profile' => 'r,u',
+        ],
+        'principal' => [
+            'profile' => 'r,u',
+        ],
+        'coordinator' => [
             'profile' => 'r,u',
         ],
     ],

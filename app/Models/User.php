@@ -65,4 +65,14 @@ class User extends Authenticatable implements LaratrustUser
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
+
+    public function schoolsAsCoordinator()
+    {
+        return $this->hasMany(School::class, 'coordinator_id');
+    }
+
+    public function schoolsAsPrincipal()
+    {
+        return $this->hasMany(School::class, 'principal_id');
+    }
 }

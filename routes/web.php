@@ -33,4 +33,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.','middleware' => ['auth', 'role:admin|superadmin']], function () {
     Volt::route('users', 'users.users-index')->name('users.index');
+    Volt::route('schools', 'schools.schools-index')->name('schools.index');
 });
