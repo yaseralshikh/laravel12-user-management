@@ -8,6 +8,7 @@
 
             <flux:input wire:model="name" label="Name" placeholder="Pser name" />
             <flux:input wire:model="email" label="Email" placeholder="Pser email" />
+            <flux:input wire:model="phone" label="Phone" placeholder="Pser phone" />
             <flux:input wire:model="password" type="password" label="Password"  placeholder="Pser password" />
             <flux:input wire:model="password_confirmation" type="password" label="Confirm Password" placeholder="Confirm password" />
             @if ($this->role != 1) <!-- Assuming role 1 is superadmin and should not be editable roles -->

@@ -104,6 +104,7 @@
                     <th>م</th>
                     <th>الاسم</th>
                     <th>البريد الالكتروني</th>
+                    <th>الهاتف</th>
                     <th>الصلاحية</th>
                 </tr>
             </thead>
@@ -114,6 +115,7 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->phone }}</td>
                         <td>{{ $user->roles[0]->name }}</td>
                     </tr>
                 @endforeach
