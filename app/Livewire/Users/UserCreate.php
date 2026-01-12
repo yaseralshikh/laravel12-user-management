@@ -12,16 +12,18 @@ class UserCreate extends Component
     public $name;
     public $email;
     public $phone;
+    public $educational_sector;
     public $password;
     public $password_confirmation;
     public $role = null; // Default role ID, assuming 1 is the user role
 
     protected $rules = [
-        'name'      => ['required', 'string', 'max:255', 'unique:users'],
-        'email'     => ['required', 'email', 'max:50', 'unique:users'],
-        'phone'     => ['nullable','string', 'max:12'],
-        'password'  => ['required', 'min:8', 'confirmed'],
-        'role'      => ['required', 'exists:roles,id'], // Assuming role is passed as ID
+        'name'                  => ['required', 'string', 'max:255', 'unique:users'],
+        'email'                 => ['required', 'email', 'max:50', 'unique:users'],
+        'phone'                 => ['nullable','string', 'max:12'],
+        'educational_sector'    => ['nullable', 'string', 'max:255'],
+        'password'              => ['required', 'min:8', 'confirmed'],
+        'role'                  => ['required', 'exists:roles,id'], // Assuming role is passed as ID
     ];
 
     protected $messages = [
@@ -35,6 +37,8 @@ class UserCreate extends Component
         'email.max' => 'The email must not exceed 50 characters.',
         'phone.string' => 'The phone must be a string.',
         'phone.max' => 'The phone must not exceed 12 characters.',
+        'educational_sector.string' => 'The educational sector must be a string.',
+        'educational_sector.max' => 'The educational sector must not exceed 255 characters.',
         'password.required' => 'The password is required.',
         'password.min' => 'The password must be at least 8 characters.',
         'password.confirmed' => 'The password confirmation does not match.',
@@ -58,7 +62,14 @@ class UserCreate extends Component
 
     public function render()
     {
-        $roles = Role::whereNotIn('id', [1])->get();
-        return view('livewire.users.user-create', compact('roles'));
+        if (auth()->user()->hasRole('superadmin', 'admin')){
+            $accept_roles = [];
+        } else {
+            $accept_roles = ['3', '4', '5'];
+        }
+        $educationalSectors = config('schools.educational_sectors');
+
+        $roles = Role::whereNotIn('id', $accept_roles)->get();
+        return view('livewire.users.user-create', compact('roles', 'educationalSectors'));
     }
 }

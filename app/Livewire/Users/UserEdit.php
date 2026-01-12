@@ -14,6 +14,7 @@ class UserEdit extends Component
     public $name;
     public $email;
     public $phone;
+    public $educational_sector;
     public $password;
     public $password_confirmation;
     public $role = null; // Default role ID, assuming 1 is the user role
@@ -23,7 +24,8 @@ class UserEdit extends Component
         return [
             'name' => ['required', 'string', 'max:255', 'unique:users,name,' . $this->userId],
             'email' => ['required', 'email', 'max:50', 'unique:users,email,' . $this->userId],
-            'phone' => ['string', 'max:12'],
+            'phone' => ['nullable','string', 'max:12'],
+            'educational_sector' => ['nullable', 'string', 'max:255'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'], // Allow password to be nullable
             'role' => ['required', 'exists:roles,id'],
         ];
@@ -36,8 +38,12 @@ class UserEdit extends Component
         'email.required' => 'The email is required.',
         'email.email' => 'The email must be a valid email address.',
         'email.max' => 'The email must not exceed 50 characters.',
+        'email.unique' => 'The email has already been taken.',
         'phone.string' => 'The phone must be a string.',
         'phone.max' => 'The phone must not exceed 12 characters.',
+        'educational_sector.string' => 'The educational sector must be a string.',
+        'educational_sector.max' => 'The educational sector must not exceed 255 characters.',
+        'password.string' => 'The password must be a string.',
         'password.min' => 'The password must be at least 8 characters.',
         'password.confirmed' => 'The password confirmation does not match.',
         'role.required' => 'The role is required.',
@@ -55,7 +61,10 @@ class UserEdit extends Component
 
         $this->name = $user['name'];
         $this->email = $user['email'];
-        $this->phone = $user['phone'];
+        $this->phone = $user['phone'] ?? null;
+        $this->educational_sector = $user['educational_sector'] ?? null;
+        $this->password = null;
+        $this->password_confirmation = null;
         $this->userId = $user['id'];
         $this->role = $user['roles'][0]['id'] ?? null;
         Flux::modal('edit-user')->show();
@@ -74,6 +83,7 @@ class UserEdit extends Component
                 'name'     => $this->name,
                 'email'    => $this->email,
                 'phone'    => $this->phone,
+                'educational_sector' => $this->educational_sector,
                 'password' => $this->password ?? $user->password,
             ]);
 
@@ -87,8 +97,17 @@ class UserEdit extends Component
 
     public function render()
     {
-         $roles = Role::whereNotIn('id', [1])->get();
 
-        return view('livewire.users.user-edit', compact('roles'));
+        if (auth()->user()->hasRole('superadmin', 'admin')){
+            $accept_roles = [];
+        } else {
+            $accept_roles = ['3', '4', '5'];
+        }
+
+        $educationalSectors = config('schools.educational_sectors');
+
+        $roles = Role::whereNotIn('id', [1])->get();
+
+        return view('livewire.users.user-edit', compact('roles', 'educationalSectors'));
     }
 }

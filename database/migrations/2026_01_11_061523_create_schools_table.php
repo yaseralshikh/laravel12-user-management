@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('schools', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('ministry_code', 25)->unique();
-            $table->enum('gender', ['male', 'female'])->default('male');
+            $table->string('ministry_code', 25)->comment('الرقم الوزاري')->unique();
+            $table->enum('gender', ['بنين', 'بنات'])->default('بنين');
             $table->string('stage')->comment('المراحل الدراسية');
-            $table->boolean('is_complex')->default(false);
+            $table->boolean('is_complex')->comment('المدرسة ضمن مجمع تعليمي')->default(false);
             $table->string('school_type')->comment('نوع المدرسة');
             $table->string('building_type')->comment('نوع المبنى');
-            $table->string('status')->default('active');
+            $table->enum('status', ['نشط', 'غير نشط'])->default('نشط');
             $table->string('educational_sector')->comment('القطاع التعليمي داخل المنطقة');
-            $table->foreignId('coordinator_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('principal_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('coordinator_id')->comment('منسق الموهوبين')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('principal_id')->comment('مدير المدرسة')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

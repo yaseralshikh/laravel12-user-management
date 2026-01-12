@@ -19,10 +19,12 @@ return [
         ],
         'admin' => [
             'users' => 'c,r,u,d',
+            'schools' => 'c,r,u,d',
             'profile' => 'r,u',
         ],
         'supervisor' => [
             'users' => 'c,r,u,d',
+            'schools' => 'c,r,u,d',            
             'profile' => 'r,u',
         ],
         'principal' => [

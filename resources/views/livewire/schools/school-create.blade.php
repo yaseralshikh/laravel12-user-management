@@ -13,7 +13,7 @@
                 <flux:select wire:model="gender" label="نوع المدرسة">
                     <option value="">اختر النوع</option>
                     @foreach($genders as $key => $value)
-                        <option value="{{ $key }}">{{ $value }}</option>
+                        <option value="{{ $value }}">{{ $value }}</option>
                     @endforeach
                 </flux:select>
 
@@ -34,7 +34,7 @@
                 <flux:select wire:model="status" label="حالة المدرسة">
                     <option value="">اختر الحالة</option>
                     @foreach($statuses as $key => $value)
-                        <option value="{{ $key }}">{{ $value }}</option>
+                        <option value="{{ $value }}">{{ $value }}</option>
                     @endforeach
                 </flux:select>
 
@@ -59,14 +59,15 @@
                     @endforeach
                 </flux:select>
 
-                <flux:select wire:model="principal_id" label="المدير">
+                <flux:select wire:model="principal_id" label="المدير" searchable>
                     <option value="">اختر المدير (اختياري)</option>
-                    @foreach($principals as $principal)
+
+                    @foreach ($principals as $principal)
                         <option value="{{ $principal->id }}">{{ $principal->name }}</option>
                     @endforeach
                 </flux:select>
 
-                <flux:checkbox wire:model="is_complex" label="المدرسة ضمن مجمع مدارس" class="col-span-2" />
+                <flux:checkbox wire:model="is_complex" label="مدرسة ضمن مجمع" class="col-span-2" />
             </div>
 
             <div class="flex">

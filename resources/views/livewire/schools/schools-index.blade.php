@@ -126,6 +126,10 @@
             </flux:select>
         </div>
 
+        <style>
+            [x-cloak] { display:none !important; }
+        </style>
+
         {{-- جدول عرض المدارس --}}
        <div class="overflow-x-auto mt-4 rounded-lg shadow dark:shadow-gray-800">
            <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
@@ -173,7 +177,7 @@
                         <td class="px-6 py-2 text-gray-700">
                             @php
                                 $statusLabel = config('schools.statuses')[$school->status] ?? $school->status;
-                                $statusColor = $school->status === 'active' ? 'green' : ($school->status === 'inactive' ? 'red' : 'yellow');
+                                $statusColor = $school->status === 'نشط' ? 'green' : ($school->status === 'غير نشط' ? 'red' : 'yellow');
                             @endphp
                             <flux:badge color="{{ $statusColor }}">{{ $statusLabel }}</flux:badge>
                         </td>
