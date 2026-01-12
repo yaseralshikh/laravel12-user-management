@@ -131,10 +131,11 @@
         </style>
 
         {{-- جدول عرض المدارس --}}
-       <div class="overflow-x-auto mt-4 rounded-lg shadow dark:shadow-gray-800">
+       <div class="overflow-x-auto mt-4 rounded-lg shadow dark:shadow-gray-800" x-data="{ expandedRows: {} }">
            <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
                <thead class="text-xs uppercase bg-gray-500/20 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 text-center">
                 <tr>
+                   <th scope="col" class="px-6 py-3 w-10"></th>
                    <th scope="col" class="px-6 py-3">م</th>
                     <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('name')">
                         اسم المدرسة
@@ -165,6 +166,18 @@
                <tbody>
                 @forelse ($schools as $school)                    
                     <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-800 dark:even:bg-gray-700/50 border-b border-gray-200 dark:border-gray-600 text-center" wire:key="school-{{ $school->id }}">
+                        <td class="px-6 py-2">
+                            <button 
+                                @click="expandedRows[{{ $school->id }}] = !expandedRows[{{ $school->id }}]"
+                                class="inline-flex items-center justify-center w-6 h-6 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                                :class="{ 'bg-blue-100 dark:bg-blue-900': expandedRows[{{ $school->id }}] }"
+                                title="عرض التفاصيل"
+                            >
+                                <svg :class="{ 'rotate-180': expandedRows[{{ $school->id }}] }" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                            </button>
+                        </td>
                         <td class="px-6 py-2 font-medium text-gray-900 dark:text-gray-100">{{ $schools->firstItem() + $loop->index  }}</td>
                         <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $school->name }}</td>
                         <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $school->ministry_code }}</td>
@@ -199,6 +212,41 @@
                                 <flux:button variant="subtle" size="sm" disabled>تعديل</flux:button>
                                 <flux:button variant="subtle" size="sm" disabled>حذف</flux:button>
                             @endrole
+                        </td>
+                    </tr>
+
+                    {{-- Collapsible Details Row --}}
+                    <tr x-show="expandedRows[{{ $school->id }}]" 
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:leave="transition ease-in duration-200"
+                        class="bg-blue-50 dark:bg-blue-900/30 border-b border-gray-200 dark:border-gray-600">
+                        <td colspan="11" class="px-6 py-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">القطاع التعليمي</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->educational_sector ?? 'غير محدد' }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">نوع المبنى</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->building_type ?? 'غير محدد' }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">العنوان</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->address ?? 'غير محدد' }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">رقم الهاتف</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->phone ?? 'غير محدد' }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">البريد الإلكتروني</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->email ?? 'غير محدد' }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">تاريخ التحديث</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->updated_at->format('Y-m-d H:i') }}</p>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @empty
