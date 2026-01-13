@@ -143,23 +143,20 @@
                             @if($sortDirection === 'asc') ↑ @else ↓ @endif
                         @endif
                     </th>
-                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('ministry_code')">
-                        الرمز الوزاري
-                        @if($sortField === 'ministry_code')
+                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('gender')">
+                        النوع
+                        @if($sortField === 'gender')
                             @if($sortDirection === 'asc') ↑ @else ↓ @endif
                         @endif
                     </th>
-                    <th scope="col" class="px-6 py-3">النوع</th>
-                    <th scope="col" class="px-6 py-3">المراحل</th>
+                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('stage')">
+                        المراحل
+                        @if($sortField === 'stage')
+                            @if($sortDirection === 'asc') ↑ @else ↓ @endif
+                        @endif                        
+                    </th>
                     <th scope="col" class="px-6 py-3">مجمع</th>
-                    <th scope="col" class="px-6 py-3">نوع التعليم</th>
                     <th scope="col" class="px-6 py-3">الحالة</th>
-                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('created_at')">
-                        تاريخ الإنشاء
-                        @if($sortField === 'created_at')
-                            @if($sortDirection === 'asc') ↑ @else ↓ @endif
-                        @endif
-                    </th>
                    <th scope="col" class="px-6 py-3 w-70">الإجراءات</th>
                </tr>
                </thead>
@@ -180,13 +177,11 @@
                         </td>
                         <td class="px-6 py-2 font-medium text-gray-900 dark:text-gray-100">{{ $schools->firstItem() + $loop->index  }}</td>
                         <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $school->name }}</td>
-                        <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $school->ministry_code }}</td>
                         <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ config('schools.genders')[$school->gender] ?? $school->gender }}</td>
                         <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $school->stage }}</td>
                         <td class="px-6 py-2 text-gray-700 dark:text-gray-300">
                             <flux:badge color="{{ $school->is_complex ? 'blue' : 'gray' }}">{{ $school->is_complex ? 'ضمن مجمع' : 'مستقلة' }}</flux:badge>
                         </td>
-                        <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $school->school_type }}</td>
                         <td class="px-6 py-2 text-gray-700">
                             @php
                                 $statusLabel = config('schools.statuses')[$school->status] ?? $school->status;
@@ -194,7 +189,6 @@
                             @endphp
                             <flux:badge color="{{ $statusColor }}">{{ $statusLabel }}</flux:badge>
                         </td>
-                        <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $school->created_at->format('Y-m-d') }}</td>
                         <td class="px-6 py-2 space-x-1">
                             @role('admin|superadmin')
                                 @permission('schools-update')
@@ -231,16 +225,42 @@
                                     <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->building_type ?? 'غير محدد' }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">العنوان</p>
-                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->address ?? 'غير محدد' }}</p>
+                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">الرقم الوزاري</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->ministry_code ?? 'غير محدد' }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">رقم الهاتف</p>
-                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->phone ?? 'غير محدد' }}</p>
+                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">مدير المدرسة</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">
+                                        <flux:heading class="flex items-center gap-2">
+                                            {{ $school->principal->name ?? 'غير محدد' }}
+                                            <flux:tooltip toggleable>
+                                                <flux:button icon="information-circle" size="sm" variant="ghost" />
+                                                <flux:tooltip.content class="max-w-[20rem] space-y-2">
+                                                    <p>email: {{ $school->principal->email ?? 'غير محدد' }}</p>
+                                                    <p>phone: {{ $school->principal->phone ?? 'غير محدد' }}</p>
+                                                    <p>national ID: {{ $school->principal->nastional_id ?? 'غير محدد' }}</p>
+                                                    <p>created at: {{ $school->principal->created_at ? $school->principal->created_at->format('Y-m-d') : 'غير محدد' }}</p>
+                                                </flux:tooltip.content>
+                                            </flux:tooltip>
+                                        </flux:heading>                                        
+                                    </p>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">البريد الإلكتروني</p>
-                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->email ?? 'غير محدد' }}</p>
+                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">منسق الموهوبين</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">
+                                        <flux:heading class="flex items-center gap-2">
+                                            {{ $school->coordinator->name ?? 'غير محدد' }}
+                                            <flux:tooltip toggleable>
+                                                <flux:button icon="information-circle" size="sm" variant="ghost" />
+                                                <flux:tooltip.content class="max-w-[20rem] space-y-2">
+                                                    <p>email: {{ $school->coordinator->email ?? 'غير محدد' }}</p>
+                                                    <p>phone: {{ $school->coordinator->phone ?? 'غير محدد' }}</p>
+                                                    <p>national ID: {{ $school->coordinator->nastional_id ?? 'غير محدد' }}</p>
+                                                    <p>created at: {{ $school->coordinator->created_at ? $school->coordinator->created_at->format('Y-m-d') : 'غير محدد' }}</p>
+                                                </flux:tooltip.content>
+                                            </flux:tooltip>
+                                        </flux:heading>                                        
+                                    </p>                                    
                                 </div>
                                 <div>
                                     <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">تاريخ التحديث</p>

@@ -23,6 +23,7 @@ class User extends Authenticatable implements LaratrustUser
      */
     protected $fillable = [
         'name',
+        'nastional_id',
         'email',
         'phone',
         'educational_sector',
@@ -50,6 +51,7 @@ class User extends Authenticatable implements LaratrustUser
     protected function casts(): array
     {
         return [
+            'nastional_id' => 'string',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];

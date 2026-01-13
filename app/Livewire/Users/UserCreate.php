@@ -5,11 +5,13 @@ namespace App\Livewire\Users;
 use App\Models\Role;
 use App\Models\User;
 use Flux\Flux;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class UserCreate extends Component
 {
     public $name;
+    public $nastional_id;
     public $email;
     public $phone;
     public $educational_sector;
@@ -19,6 +21,7 @@ class UserCreate extends Component
 
     protected $rules = [
         'name'                  => ['required', 'string', 'max:255', 'unique:users'],
+        'nastional_id'          => ['required', 'string', 'digits:10', 'unique:users'],
         'email'                 => ['required', 'email', 'max:50', 'unique:users'],
         'phone'                 => ['nullable','string', 'max:12'],
         'educational_sector'    => ['nullable', 'string', 'max:255'],
@@ -31,6 +34,10 @@ class UserCreate extends Component
         'name.unique' => 'The name has already been taken.',
         'name.max' => 'The name must not exceed 255 characters.',
         'name.string' => 'The name must be a string.',
+        'nastional_id.required' => 'The national ID is required.',
+        'nastional_id.string' => 'The national ID must be a string.',
+        'nastional_id.unique' => 'The national ID has already been taken.',
+        'nastional_id.digits' => 'The national ID must be exactly 10 digits.',
         'email.required' => 'The email is required and unique.',
         'email.email' => 'The email must be a valid email address.',
         'email.unique' => 'The email has already been taken.',
@@ -62,7 +69,7 @@ class UserCreate extends Component
 
     public function render()
     {
-        if (auth()->user()->hasRole('superadmin', 'admin')){
+        if (Auth::user()->hasRole('superadmin', 'admin')){
             $accept_roles = [];
         } else {
             $accept_roles = ['3', '4', '5'];

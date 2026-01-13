@@ -7,6 +7,7 @@
             </div>
 
             <flux:input wire:model="name" label="Name" placeholder="Pser name" />
+            <flux:input wire:model="nastional_id" label="National ID" placeholder="Pser national ID" />
             <flux:input wire:model="email" label="Email" placeholder="Pser email" />
             <flux:input wire:model="phone" label="Phone" placeholder="Pser phone" />
             <flux:select wire:model="educational_sector" label="Educational Sector" placeholder="Pser educational sector">

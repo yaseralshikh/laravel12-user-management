@@ -5,6 +5,7 @@ namespace App\Livewire\Users;
 use App\Models\Role;
 use App\Models\User;
 use Flux\Flux;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -12,6 +13,7 @@ class UserEdit extends Component
 {
     public $userId;
     public $name;
+    public $nastional_id;
     public $email;
     public $phone;
     public $educational_sector;
@@ -23,6 +25,7 @@ class UserEdit extends Component
     {
         return [
             'name' => ['required', 'string', 'max:255', 'unique:users,name,' . $this->userId],
+            'nastional_id' => ['required', 'string', 'digits:10', 'unique:users,nastional_id,' . $this->userId],
             'email' => ['required', 'email', 'max:50', 'unique:users,email,' . $this->userId],
             'phone' => ['nullable','string', 'max:12'],
             'educational_sector' => ['nullable', 'string', 'max:255'],
@@ -35,6 +38,11 @@ class UserEdit extends Component
         'name.required' => 'The name is required.',
         'name.max' => 'The name must not exceed 255 characters.',
         'name.string' => 'The name must be a string.',
+        'name.unique' => 'The name has already been taken.',
+        'nastional_id.required' => 'The national ID is required.',
+        'nastional_id.string' => 'The national ID must be a string.',
+        'nastional_id.unique' => 'The national ID has already been taken.',
+        'nastional_id.digits' => 'The national ID must be exactly 10 digits.',
         'email.required' => 'The email is required.',
         'email.email' => 'The email must be a valid email address.',
         'email.max' => 'The email must not exceed 50 characters.',
@@ -60,6 +68,7 @@ class UserEdit extends Component
         $user = $user['user'];
 
         $this->name = $user['name'];
+        $this->nastional_id = $user['nastional_id'];
         $this->email = $user['email'];
         $this->phone = $user['phone'] ?? null;
         $this->educational_sector = $user['educational_sector'] ?? null;
@@ -78,9 +87,11 @@ class UserEdit extends Component
             $this->password = bcrypt($this->password);
         }
 
-        if ($user = User::find($this->userId)) {
+        $user = User::find($this->userId);
+        if ($user) {
             $user->update([
                 'name'     => $this->name,
+                'nastional_id' => $this->nastional_id,
                 'email'    => $this->email,
                 'phone'    => $this->phone,
                 'educational_sector' => $this->educational_sector,
@@ -92,13 +103,16 @@ class UserEdit extends Component
             $this->dispatch('reloadUsers');
             $this->dispatch('showSuccessAlert', message: 'تم تحديث البيانات بنجاح');
             Flux::modal('edit-user')->close();
+        } else {
+            // Handle the case where the user is not found
+            $this->dispatch('showErrorAlert', message: 'User not found.');
         }
     }
 
     public function render()
     {
 
-        if (auth()->user()->hasRole('superadmin', 'admin')){
+        if (Auth::user()->hasRole('superadmin', 'admin')){
             $accept_roles = [];
         } else {
             $accept_roles = ['3', '4', '5'];
