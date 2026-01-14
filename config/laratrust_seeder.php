@@ -15,6 +15,7 @@ return [
         'superadmin' => [
             'users' => 'c,r,u,d',
             'schools' => 'c,r,u,d',
+            'sectors' => 'c,r,u,d',
             'profile' => 'r,u',
         ],
         'admin' => [

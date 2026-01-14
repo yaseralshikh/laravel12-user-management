@@ -124,6 +124,7 @@ class UsersIndex extends Component
     public function getUsersProperty()
     {
         $users = User::query()
+            ->where('name', '!=', 'Super Admin') // استثناء المستخدم الأول (superadmin)
             ->when($this->term, fn($q) =>
                 $q->where('name', 'like', '%' . $this->term . '%')
                 ->orWhere('email', 'like', '%' . $this->term . '%')
