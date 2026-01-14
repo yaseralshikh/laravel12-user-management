@@ -41,7 +41,6 @@ class SchoolEdit extends Component
             'sector_id' => ['required', 'exists:sectors,id'],
             'coordinator_id' => ['nullable', 'exists:users,id'],
             'principal_id' => ['nullable', 'exists:users,id'],
-            'updated_at' => ['nullable', 'date'],
         ];
     }
 
@@ -59,7 +58,6 @@ class SchoolEdit extends Component
         'sector_id.required' => 'القطاع التعليمي مطلوب',
         'coordinator_id.exists' => 'المنسق غير موجود',
         'principal_id.exists' => 'المدير غير موجود',
-        'updated_at.date' => 'تاريخ التحديث غير صالح',
     ];
 
     #[On('openEditModal')]

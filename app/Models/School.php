@@ -22,14 +22,12 @@ class School extends Model
         'sector_id',
         'coordinator_id',
         'principal_id',
-        'updated_at',
     ];
 
     protected $casts = [
         'stage' => 'string',
         'sector_id' => 'integer',
         'is_complex' => 'boolean',
-        'updated_at' => 'datetime',
     ];
 
     public function coordinator()
