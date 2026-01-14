@@ -19,15 +19,17 @@ class School extends Model
         'school_type',
         'building_type',
         'status',
-        'educational_sector',
+        'sector_id',
         'coordinator_id',
         'principal_id',
-        
+        'updated_at',
     ];
 
     protected $casts = [
         'stage' => 'string',
+        'sector_id' => 'integer',
         'is_complex' => 'boolean',
+        'updated_at' => 'datetime',
     ];
 
     public function coordinator()
@@ -38,5 +40,10 @@ class School extends Model
     public function principal()
     {
         return $this->belongsTo(User::class, 'principal_id');
+    }
+
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class);
     }
 }

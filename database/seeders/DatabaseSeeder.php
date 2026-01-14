@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-        $this->call(LaratrustSeeder::class);
+        $this->call(SectorSeeder::class);
+        $this->call(LaratrustSeeder::class);  
 
         $users = [
             [
@@ -35,15 +36,24 @@ class DatabaseSeeder extends Seeder
                 'nastional_id' => '1122334455',
                 'email' => 'supervisor1@app.com',
                 'name' => 'Supervisor1',
-                'educational_sector' => 'وسط جازان وفرسان',
+                'sector_id' => 1,
                 'password' => 'password',
+
                 'role' => 'supervisor',
             ],
             [
                 'nastional_id' => '6677889900',
                 'email' => 'principal1@app.com',
                 'name' => 'Principal1',
-                'educational_sector' => 'وسط جازان وفرسان',
+                'sector_id' => 1,
+                'password' => 'password',
+                'role' => 'principal',
+            ],
+            [
+                'nastional_id' => '9988776655',
+                'email' => 'principal2@app.com',
+                'name' => 'Principal2',
+                'sector_id' => 1,
                 'password' => 'password',
                 'role' => 'principal',
             ],
@@ -51,7 +61,15 @@ class DatabaseSeeder extends Seeder
                 'nastional_id' => '5544332211',
                 'email' => 'coordinator1@app.com',
                 'name' => 'Coordinator1',
-                'educational_sector' => 'وسط جازان وفرسان',
+                'sector_id' => 1,
+                'password' => 'password',
+                'role' => 'coordinator',
+            ],
+            [
+                'nastional_id' => '2233445566',
+                'email' => 'coordinator2@app.com',
+                'name' => 'Coordinator2',
+                'sector_id' => 1,
                 'password' => 'password',
                 'role' => 'coordinator',
             ],
@@ -63,7 +81,7 @@ class DatabaseSeeder extends Seeder
                 [
                     'nastional_id' => $userData['nastional_id'],
                     'name' => $userData['name'],
-                    'educational_sector' => $userData['educational_sector'] ?? null,
+                    'sector_id' => $userData['sector_id'] ?? null,
                     'password' => bcrypt($userData['password']),
                     'email_verified_at' => now(),
                 ]

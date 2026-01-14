@@ -15,16 +15,17 @@ class UsersExport
         $sheet = $spreadsheet->getActiveSheet();
 
         // رؤوس الأعمدة
-        $sheet->getStyle('A1:D1')->getFill()->setFillType('solid')->getStartColor()->setRGB('FFFF00');
-        $sheet->getStyle('A1:D1')->getAlignment()->setHorizontal('center');
-        $sheet->getStyle('A1:D1')->getAlignment()->setVertical('center');
-        $sheet->getStyle('A1:D1')->getFont()->setBold(true)->setSize(12);
+        $sheet->getStyle('A1:E1')->getFill()->setFillType('solid')->getStartColor()->setRGB('FFFF00');
+        $sheet->getStyle('A1:E1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A1:E1')->getAlignment()->setVertical('center');
+        $sheet->getStyle('A1:E1')->getFont()->setBold(true)->setSize(12);
         $sheet->setCellValue('A1', 'ID');
         $sheet->setCellValue('B1', 'Name');
         $sheet->setCellValue('C1', 'Email');
         $sheet->setCellValue('D1', 'Phone');
+        $sheet->setCellValue('E1', 'Educational Sector');
         // حجم الأعمدة
-        foreach (range('A', 'D') as $col) {
+        foreach (range('A', 'E') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
 
@@ -40,6 +41,7 @@ class UsersExport
             $sheet->setCellValue("B{$row}", $user->name);
             $sheet->setCellValue("C{$row}", $user->email);
             $sheet->setCellValue("D{$row}", $user->phone);
+            $sheet->setCellValue("E{$row}", $user->sector ? $user->sector->name : '');
             $row++;
         }
 

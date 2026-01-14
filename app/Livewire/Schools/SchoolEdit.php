@@ -3,10 +3,13 @@
 namespace App\Livewire\Schools;
 
 use App\Models\School;
+use App\Models\Sector;
 use App\Models\User;
 use Flux\Flux;
 use Livewire\Attributes\On;
 use Livewire\Component;
+
+use function Symfony\Component\Clock\now;
 
 class SchoolEdit extends Component
 {
@@ -19,9 +22,10 @@ class SchoolEdit extends Component
     public $school_type;
     public $building_type;
     public $status;
-    public $educational_sector;
+    public $sector_id;
     public $coordinator_id = null;
     public $principal_id = null;
+    public $updated_at;
 
     public function rules()
     {
@@ -34,9 +38,10 @@ class SchoolEdit extends Component
             'school_type' => ['required', 'in:حكومي,أهلي,عالمي'],
             'building_type' => ['required', 'in:حكومي,ملك,مستأجر'],
             'status' => ['required', 'in:نشط,غير نشط'],
-            'educational_sector' => ['required', 'string', 'max:255'],
+            'sector_id' => ['required', 'exists:sectors,id'],
             'coordinator_id' => ['nullable', 'exists:users,id'],
             'principal_id' => ['nullable', 'exists:users,id'],
+            'updated_at' => ['nullable', 'date'],
         ];
     }
 
@@ -51,9 +56,10 @@ class SchoolEdit extends Component
         'school_type.required' => 'نوع التعليم مطلوب',
         'building_type.required' => 'نوع المبنى مطلوب',
         'status.required' => 'حالة المدرسة مطلوبة',
-        'educational_sector.required' => 'القطاع التعليمي مطلوب',
+        'sector_id.required' => 'القطاع التعليمي مطلوب',
         'coordinator_id.exists' => 'المنسق غير موجود',
         'principal_id.exists' => 'المدير غير موجود',
+        'updated_at.date' => 'تاريخ التحديث غير صالح',
     ];
 
     #[On('openEditModal')]
@@ -73,10 +79,10 @@ class SchoolEdit extends Component
         $this->school_type = $school['school_type'];
         $this->building_type = $school['building_type'];
         $this->status = $school['status'];
-        $this->educational_sector = $school['educational_sector'];
+        $this->sector_id = $school['sector_id'];
         $this->coordinator_id = $school['coordinator_id'];
         $this->principal_id = $school['principal_id'];
-
+        $this->updated_at = $school['updated_at'];
         Flux::modal('edit-school')->show();
     }
 
@@ -94,9 +100,10 @@ class SchoolEdit extends Component
                 'school_type' => $this->school_type,
                 'building_type' => $this->building_type,
                 'status' => $this->status,
-                'educational_sector' => $this->educational_sector,
+                'sector_id' => $this->sector_id,
                 'coordinator_id' => $this->coordinator_id,
                 'principal_id' => $this->principal_id,
+                'updated_at' => now(),
             ]);
 
             $this->dispatch('reloadSchools');
@@ -119,8 +126,8 @@ class SchoolEdit extends Component
         $buildingTypes = config('schools.building_types');
         $stageOptions = config('schools.stages');
         $statuses = config('schools.statuses');
-        $educationalSectors = config('schools.educational_sectors');
+        $sectors = Sector::all();
 
-        return view('livewire.schools.school-edit', compact('coordinators', 'principals', 'genders', 'schoolTypes', 'buildingTypes', 'stageOptions', 'statuses', 'educationalSectors'));
+        return view('livewire.schools.school-edit', compact('coordinators', 'principals', 'genders', 'schoolTypes', 'buildingTypes', 'stageOptions', 'statuses', 'sectors'));
     }
 }

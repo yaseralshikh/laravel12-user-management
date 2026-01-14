@@ -3,11 +3,13 @@
 namespace App\Livewire\Users;
 
 use App\Models\Role;
+use App\Models\Sector;
 use App\Models\User;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Mpdf\Tag\S;
 
 class UserEdit extends Component
 {
@@ -16,7 +18,7 @@ class UserEdit extends Component
     public $nastional_id;
     public $email;
     public $phone;
-    public $educational_sector;
+    public $sector_id;
     public $password;
     public $password_confirmation;
     public $role = null; // Default role ID, assuming 1 is the user role
@@ -28,7 +30,7 @@ class UserEdit extends Component
             'nastional_id' => ['required', 'string', 'digits:10', 'unique:users,nastional_id,' . $this->userId],
             'email' => ['required', 'email', 'max:50', 'unique:users,email,' . $this->userId],
             'phone' => ['nullable','string', 'max:12'],
-            'educational_sector' => ['nullable', 'string', 'max:255'],
+            'sector_id' => ['nullable', 'string', 'max:255'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'], // Allow password to be nullable
             'role' => ['required', 'exists:roles,id'],
         ];
@@ -49,8 +51,8 @@ class UserEdit extends Component
         'email.unique' => 'The email has already been taken.',
         'phone.string' => 'The phone must be a string.',
         'phone.max' => 'The phone must not exceed 12 characters.',
-        'educational_sector.string' => 'The educational sector must be a string.',
-        'educational_sector.max' => 'The educational sector must not exceed 255 characters.',
+        'sector_id.string' => 'The sector ID must be a string.',
+        'sector_id.max' => 'The sector ID must not exceed 255 characters.',
         'password.string' => 'The password must be a string.',
         'password.min' => 'The password must be at least 8 characters.',
         'password.confirmed' => 'The password confirmation does not match.',
@@ -71,7 +73,7 @@ class UserEdit extends Component
         $this->nastional_id = $user['nastional_id'];
         $this->email = $user['email'];
         $this->phone = $user['phone'] ?? null;
-        $this->educational_sector = $user['educational_sector'] ?? null;
+        $this->sector_id = $user['sector_id'] ?? null;
         $this->password = null;
         $this->password_confirmation = null;
         $this->userId = $user['id'];
@@ -94,7 +96,7 @@ class UserEdit extends Component
                 'nastional_id' => $this->nastional_id,
                 'email'    => $this->email,
                 'phone'    => $this->phone,
-                'educational_sector' => $this->educational_sector,
+                'sector_id' => $this->sector_id,
                 'password' => $this->password ?? $user->password,
             ]);
 
@@ -118,10 +120,10 @@ class UserEdit extends Component
             $accept_roles = ['3', '4', '5'];
         }
 
-        $educationalSectors = config('schools.educational_sectors');
+        $sectors = Sector::all();
 
-        $roles = Role::whereNotIn('id', [1])->get();
+        $roles = Role::whereNotIn('id', $accept_roles)->get();
 
-        return view('livewire.users.user-edit', compact('roles', 'educationalSectors'));
+        return view('livewire.users.user-edit', compact('roles', 'sectors'));
     }
 }

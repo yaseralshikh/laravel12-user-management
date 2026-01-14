@@ -105,6 +105,7 @@
                     <th>الاسم</th>
                     <th>البريد الالكتروني</th>
                     <th>الهاتف</th>
+                    <th>القطاع التعليمي</th>
                     <th>الصلاحية</th>
                 </tr>
             </thead>
@@ -116,6 +117,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone }}</td>
+                        <td>{{ $user->sector ? $user->sector->name : '' }}</td>
                         <td>{{ $user->roles[0]->name }}</td>
                     </tr>
                 @endforeach

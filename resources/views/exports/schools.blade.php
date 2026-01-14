@@ -108,8 +108,10 @@
                     <th>المراحل</th>
                     <th>نوع التعليم</th>
                     <th>نوع المبنى</th>
-                    <th>الحالة</th>
+                    <th>المدير</th>
+                    <th>المنسق</th>
                     <th>القطاع التعليمي</th>
+                    <th>الحالة</th>
                 </tr>
             </thead>
             <tbody>
@@ -122,8 +124,10 @@
                         <td>{{ $school->stage }}</td>
                         <td>{{ $school->school_type }}</td>
                         <td>{{ $school->building_type }}</td>
+                        <td>{{ $school->principal->name }}</td>
+                        <td>{{ $school->coordinator->name }}</td>
+                        <td>{{ $school->sector->name ?? '' }}</td>
                         <td>{{ config('schools.statuses')[$school->status] ?? $school->status }}</td>
-                        <td>{{ $school->educational_sector }}</td>
                     </tr>
                 @empty
                     <tr>

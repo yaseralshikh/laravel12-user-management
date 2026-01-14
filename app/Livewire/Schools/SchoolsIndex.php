@@ -5,6 +5,7 @@ namespace App\Livewire\Schools;
 use \Mpdf\Output\Destination;
 use App\Exports\SchoolsExport;
 use App\Models\School;
+use App\Models\Sector;
 use App\Models\User;
 use Flux\Flux;
 use Livewire\Attributes\On;
@@ -88,7 +89,7 @@ class SchoolsIndex extends Component
 
     public function edit($schoolId)
     {
-        if ($school = School::with(['coordinator', 'principal'])->find($schoolId)) {
+        if ($school = School::with(['coordinator', 'principal', 'sector'])->find($schoolId)) {
             $this->dispatch('openEditModal', ['school' => $school]);
         }
     }
@@ -152,7 +153,7 @@ class SchoolsIndex extends Component
     public function getSchoolsProperty()
     {
         $schools = $this->applyFilters(
-            School::query()->with(['coordinator', 'principal'])
+            School::query()->with(['coordinator', 'principal', 'sector'])
         )
         ->orderBy($this->sortField, $this->sortDirection)
         ->latest('created_at')
@@ -169,7 +170,7 @@ class SchoolsIndex extends Component
             'statuses' => config('schools.statuses'),
             'schoolTypes' => config('schools.school_types'),
             'buildingTypes' => config('schools.building_types'),
-            'educationalSectors' => config('schools.educational_sectors'),
+            'sectors' => Sector::all(),
             'stageOptions' => config('schools.stages'),
         ]);
     }
@@ -187,7 +188,7 @@ class SchoolsIndex extends Component
             ->when($this->statusFilter, fn($q) => $q->where('status', $this->statusFilter))
             ->when($this->schoolTypeFilter, fn($q) => $q->where('school_type', $this->schoolTypeFilter))
             ->when($this->buildingTypeFilter, fn($q) => $q->where('building_type', $this->buildingTypeFilter))
-            ->when($this->sectorFilter, fn($q) => $q->where('educational_sector', $this->sectorFilter))
+            ->when($this->sectorFilter, fn($q) => $q->where('sector_id', $this->sectorFilter))
             ->when($this->stageFilter, fn($q) => $q->where('stage', $this->stageFilter))
             ->when($this->complexFilter !== '', fn($q) => $q->where('is_complex', $this->complexFilter === '1'));
     }

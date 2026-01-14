@@ -107,8 +107,8 @@
 
             <flux:select wire:model.live="sectorFilter" label="القطاع التعليمي">
                 <option value="">كل القطاعات</option>
-                @foreach($educationalSectors as $key => $value)
-                    <option value="{{ $value }}">{{ $value }}</option>
+                @foreach($sectors as $sector)
+                    <option value="{{ $sector->id }}">{{ $sector->name }}</option>
                 @endforeach
             </flux:select>
 
@@ -218,11 +218,11 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <div>
                                     <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">القطاع التعليمي</p>
-                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->educational_sector ?? 'غير محدد' }}</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->sector->name ?? 'غير محدد' }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">نوع المبنى</p>
-                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->building_type ?? 'غير محدد' }}</p>
+                                    <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">نوع التعليم / نوع المبنى</p>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 mt-1">{{ $school->school_type ?? 'غير محدد' }} / {{ $school->building_type ?? 'غير محدد' }}</p>
                                 </div>
                                 <div>
                                     <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">الرقم الوزاري</p>
@@ -239,7 +239,7 @@
                                                     <p>email: {{ $school->principal->email ?? 'غير محدد' }}</p>
                                                     <p>phone: {{ $school->principal->phone ?? 'غير محدد' }}</p>
                                                     <p>national ID: {{ $school->principal->nastional_id ?? 'غير محدد' }}</p>
-                                                    <p>created at: {{ $school->principal->created_at ? $school->principal->created_at->format('Y-m-d') : 'غير محدد' }}</p>
+                                                    <p>created at: {{ $school->principal?->created_at?->format('Y-m-d') ?: 'غير محدد' }}</p>
                                                 </flux:tooltip.content>
                                             </flux:tooltip>
                                         </flux:heading>                                        
@@ -256,7 +256,7 @@
                                                     <p>email: {{ $school->coordinator->email ?? 'غير محدد' }}</p>
                                                     <p>phone: {{ $school->coordinator->phone ?? 'غير محدد' }}</p>
                                                     <p>national ID: {{ $school->coordinator->nastional_id ?? 'غير محدد' }}</p>
-                                                    <p>created at: {{ $school->coordinator->created_at ? $school->coordinator->created_at->format('Y-m-d') : 'غير محدد' }}</p>
+                                                    <p>created at: {{ $school->coordinator?->created_at?->format('Y-m-d') ?: 'غير محدد' }}</p>
                                                 </flux:tooltip.content>
                                             </flux:tooltip>
                                         </flux:heading>                                        

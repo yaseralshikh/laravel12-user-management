@@ -26,7 +26,7 @@ class User extends Authenticatable implements LaratrustUser
         'nastional_id',
         'email',
         'phone',
-        'educational_sector',
+        'sector_id',  // 'القطاع التعليمي'
         'password',
         'status',
     ];
@@ -52,6 +52,7 @@ class User extends Authenticatable implements LaratrustUser
     {
         return [
             'nastional_id' => 'string',
+            'sector_id' => 'integer',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
@@ -77,5 +78,10 @@ class User extends Authenticatable implements LaratrustUser
     public function schoolsAsPrincipal()
     {
         return $this->hasMany(School::class, 'principal_id');
+    }
+
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class);
     }
 }

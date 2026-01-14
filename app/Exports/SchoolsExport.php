@@ -18,7 +18,7 @@ class SchoolsExport
         $sheet->setRightToLeft(true);
 
         // إضافة العنوان في السطر الأول
-        $sheet->mergeCells('A1:I1');
+        $sheet->mergeCells('A1:K1');
         $sheet->setCellValue('A1', 'تقرير المدارس');
         
         // تنسيق العنوان
@@ -29,7 +29,7 @@ class SchoolsExport
             ->getStartColor()->setARGB('FFD3D3D3');
 
         // إضافة رؤوس الأعمدة في السطر الثاني
-        $headers = ['م', 'اسم المدرسة', 'الرمز الوزاري', 'النوع', 'المراحل', 'نوع التعليم', 'نوع المبنى', 'الحالة', 'القطاع التعليمي'];
+        $headers = ['م', 'اسم المدرسة', 'الرمز الوزاري', 'النوع', 'المراحل', 'نوع التعليم', 'نوع المبنى', 'المدير', 'منسق الموهوبين', 'القطاع التعليمي', 'الحالة'];
         $columnIndex = 'A';
         foreach ($headers as $header) {
             $sheet->setCellValue($columnIndex . '2', $header);
@@ -53,18 +53,20 @@ class SchoolsExport
             $sheet->setCellValue('E' . $rowIndex, $school->stage);
             $sheet->setCellValue('F' . $rowIndex, $school->school_type);
             $sheet->setCellValue('G' . $rowIndex, $school->building_type);
-            $sheet->setCellValue('H' . $rowIndex, $statusLabel);
-            $sheet->setCellValue('I' . $rowIndex, $school->educational_sector);
+            $sheet->setCellValue('H' . $rowIndex, $school->principal->name);
+            $sheet->setCellValue('I' . $rowIndex, $school->coordinator->name);
+            $sheet->setCellValue('J' . $rowIndex, $school->sector->name ?? '');
+            $sheet->setCellValue('K' . $rowIndex, $statusLabel);
             
             // توسيط المحتوى
-            $sheet->getStyle('A' . $rowIndex . ':I' . $rowIndex)
+            $sheet->getStyle('A' . $rowIndex . ':K' . $rowIndex)
                 ->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             
             $rowIndex++;
         }
 
         // ضبط عرض الأعمدة تلقائيًا
-        foreach (range('A', 'I') as $col) {
+        foreach (range('A', 'K') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
 

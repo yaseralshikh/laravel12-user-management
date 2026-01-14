@@ -3,6 +3,7 @@
 namespace App\Livewire\Schools;
 
 use App\Models\School;
+use App\Models\Sector;
 use App\Models\User;
 use Flux\Flux;
 use Livewire\Component;
@@ -17,7 +18,7 @@ class SchoolCreate extends Component
     public $school_type;
     public $building_type;
     public $status;
-    public $educational_sector;
+    public $sector_id;
     public $coordinator_id = null;
     public $principal_id = null;
 
@@ -30,7 +31,7 @@ class SchoolCreate extends Component
         'school_type' => ['required', 'in:حكومي,أهلي,عالمي'],
         'building_type' => ['required', 'in:حكومي,ملك,مستأجر'],
         'status' => ['required', 'in:نشط,غير نشط'],
-        'educational_sector' => ['required', 'string', 'max:255'],
+        'sector_id' => ['required', 'exists:sectors,id'],
         'coordinator_id' => ['nullable', 'exists:users,id'],
         'principal_id' => ['nullable', 'exists:users,id'],
     ];
@@ -46,7 +47,7 @@ class SchoolCreate extends Component
         'school_type.required' => 'نوع التعليم مطلوب',
         'building_type.required' => 'نوع المبنى مطلوب',
         'status.required' => 'حالة المدرسة مطلوبة',
-        'educational_sector.required' => 'القطاع التعليمي مطلوب',
+        'sector_id.required' => 'القطاع التعليمي مطلوب',
         'coordinator_id.exists' => 'المنسق غير موجود',
         'principal_id.exists' => 'المدير غير موجود',
     ];
@@ -76,8 +77,8 @@ class SchoolCreate extends Component
         $buildingTypes = config('schools.building_types');
         $stageOptions = config('schools.stages');
         $statuses = config('schools.statuses');
-        $educationalSectors = config('schools.educational_sectors');
+        $sectors = Sector::all();
 
-        return view('livewire.schools.school-create', compact('coordinators', 'principals', 'genders', 'schoolTypes', 'buildingTypes', 'stageOptions', 'statuses', 'educationalSectors'));
+        return view('livewire.schools.school-create', compact('coordinators', 'principals', 'genders', 'schoolTypes', 'buildingTypes', 'stageOptions', 'statuses', 'sectors'));
     }
 }

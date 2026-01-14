@@ -38,10 +38,10 @@
                     @endforeach
                 </flux:select>
 
-                <flux:select wire:model="educational_sector" label="القطاع التعليمي">
+                <flux:select wire:model="sector_id" label="القطاع التعليمي"  placeholder="اختر القطاع التعليمي">
                     <option value="">اختر القطاع التعليمي</option>
-                    @foreach($educationalSectors as $key => $value)
-                        <option value="{{ $value }}">{{ $value }}</option>
+                    @foreach($sectors as $sector)
+                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
                     @endforeach
                 </flux:select>
 

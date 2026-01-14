@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('school_type')->comment('نوع المدرسة');
             $table->string('building_type')->comment('نوع المبنى');
             $table->enum('status', ['نشط', 'غير نشط'])->default('نشط');
-            $table->string('educational_sector')->comment('القطاع التعليمي داخل المنطقة');
+            $table->foreignId('sector_id')->nullable()->constrained('sectors')->nullOnDelete()->comment('القطاع التعليمي'); // إذا حُذف القطاع تصبح null بدل منع الحذف
             $table->foreignId('coordinator_id')->comment('منسق الموهوبين')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('principal_id')->comment('مدير المدرسة')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();

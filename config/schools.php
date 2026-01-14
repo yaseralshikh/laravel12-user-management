@@ -1,17 +1,6 @@
 <?php
 
 return [
-    'educational_sectors' => [
-        'sector_1' => 'وسط جازان وفرسان',
-        'sector_2' => 'أبوعريش',
-        'sector_3' => 'العارضة',
-        'sector_4' => 'صامطة',
-        'sector_5' => 'المسارحة والحرث',
-        'sector_6' => 'صبيا وضمد',
-        'sector_7' => 'العيدابي وهروب والداير وفيفا',
-        'sector_8' => 'بيش والريث والدرب',
-    ],
-    
     'school_types' => [
         'government' => 'حكومي',
         'private' => 'أهلي',

@@ -3,6 +3,7 @@
 namespace App\Livewire\Users;
 
 use App\Models\Role;
+use App\Models\Sector;
 use App\Models\User;
 use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ class UserCreate extends Component
     public $nastional_id;
     public $email;
     public $phone;
-    public $educational_sector;
+    public $sector_id;
     public $password;
     public $password_confirmation;
     public $role = null; // Default role ID, assuming 1 is the user role
@@ -24,7 +25,7 @@ class UserCreate extends Component
         'nastional_id'          => ['required', 'string', 'digits:10', 'unique:users'],
         'email'                 => ['required', 'email', 'max:50', 'unique:users'],
         'phone'                 => ['nullable','string', 'max:12'],
-        'educational_sector'    => ['nullable', 'string', 'max:255'],
+        'sector_id'             => ['nullable', 'string', 'max:255'],
         'password'              => ['required', 'min:8', 'confirmed'],
         'role'                  => ['required', 'exists:roles,id'], // Assuming role is passed as ID
     ];
@@ -44,8 +45,8 @@ class UserCreate extends Component
         'email.max' => 'The email must not exceed 50 characters.',
         'phone.string' => 'The phone must be a string.',
         'phone.max' => 'The phone must not exceed 12 characters.',
-        'educational_sector.string' => 'The educational sector must be a string.',
-        'educational_sector.max' => 'The educational sector must not exceed 255 characters.',
+        'sector_id.string' => 'The sector ID must be a string.',
+        'sector_id.max' => 'The sector ID must not exceed 255 characters.',
         'password.required' => 'The password is required.',
         'password.min' => 'The password must be at least 8 characters.',
         'password.confirmed' => 'The password confirmation does not match.',
@@ -74,9 +75,10 @@ class UserCreate extends Component
         } else {
             $accept_roles = ['3', '4', '5'];
         }
-        $educationalSectors = config('schools.educational_sectors');
+        
+        $sectors = Sector::all();
 
         $roles = Role::whereNotIn('id', $accept_roles)->get();
-        return view('livewire.users.user-create', compact('roles', 'educationalSectors'));
+        return view('livewire.users.user-create', compact('roles', 'sectors'));
     }
 }
