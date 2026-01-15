@@ -7,17 +7,17 @@
         <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-            <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+            <a href="{{ route('home') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
                 <x-app-logo />
             </a>
 
             <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Platform')" class="grid">
+                <flux:navlist.group  class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     @role('superadmin')
-                    <flux:navlist.item icon="map" :href="route('dashboard.sectors.index')" :current="request()->is('dashboard/sectors')" wire:navigate>{{ __('Sectors') }}</flux:navlist.item>
-                        <flux:navlist.item icon="users" :href="route('dashboard.users.index')" :current="request()->is('dashboard/users')" wire:navigate>{{ __('Users') }}</flux:navlist.item>
-                        <flux:navlist.item icon="building-office-2" :href="route('dashboard.schools.index')" :current="request()->is('dashboard/schools')" wire:navigate>{{ __('Schools') }}</flux:navlist.item>
+                        <flux:navlist.item icon="map" :href="route('dashboard.sectors.index')" :current="request()->is('dashboard/sectors')" wire:navigate>{{ __('messages.sectors_management',['management' => '']) }}</flux:navlist.item>
+                        <flux:navlist.item icon="users" :href="route('dashboard.users.index')" :current="request()->is('dashboard/users')" wire:navigate>{{ __('messages.users_management',['management' => '']) }}</flux:navlist.item>
+                        <flux:navlist.item icon="building-office-2" :href="route('dashboard.schools.index')" :current="request()->is('dashboard/schools')" wire:navigate>{{ __('messages.schools_management',['management' => '']) }}</flux:navlist.item>
                     @endrole
                 </flux:navlist.group>
             </flux:navlist>

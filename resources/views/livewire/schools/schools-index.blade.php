@@ -1,5 +1,12 @@
 <div>
    <div class="p-3">
+        <flux:heading
+            size="xl"
+            class="mb-6 text-center font-bold text-blue-600 dark:text-gray-200 tracking-wide">
+            @lang('messages.schools_management',['management' => 'إدارة '])
+        </flux:heading>
+        <div class="mx-auto mb-6 h-1 w-full rounded bg-blue-500 dark:bg-gray-500"></div>
+
         {{-- for show Create modal --}}
         <livewire:schools.school-create />
 
@@ -133,7 +140,7 @@
         {{-- جدول عرض المدارس --}}
        <div class="overflow-x-auto mt-4 rounded-lg shadow dark:shadow-gray-800" x-data="{ expandedRows: {} }">
            <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-               <thead class="text-xs uppercase bg-gray-500/20 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 text-center">
+               <thead class="text-xs uppercase bg-blue-500/20 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 text-center">
                 <tr>
                    <th scope="col" class="px-6 py-3 w-10"></th>
                    <th scope="col" class="px-6 py-3">م</th>
