@@ -58,7 +58,7 @@
 
 @layer base {
     html[lang|="ar"] {
-        direction: rtl;
+        direction: ltr;
         text-align: right;
     }
 

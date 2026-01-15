@@ -83,6 +83,35 @@
             </div>
         </div>
 
+        {{-- فلاتر التصنيف --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
+            <flux:select wire:model.live="roleFilter" label="الدور">
+                <option value="">كل الأدوار</option>
+                @if (isset($roles))
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->name }}">{{ ucfirst($role->name) }}</option>
+                    @endforeach
+                @endif
+            </flux:select>
+
+            <flux:select wire:model.live="sectorFilter" label="القطاع التعليمي">
+                <option value="">كل القطاعات</option>
+                @if(isset($sectors))
+                    @foreach($sectors as $sector)
+                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                    @endforeach
+                @endif
+            </flux:select>
+
+            <flux:select wire:model.live="dateFilter" label="تاريخ الإنشاء">
+                <option value="">كل الفترات</option>
+                <option value="today">اليوم</option>
+                <option value="week">هذا الأسبوع</option>
+                <option value="month">هذا الشهر</option>
+                <option value="year">هذا العام</option>
+            </flux:select>
+        </div>
+
         {{-- جدول عرض المنشورات --}}
        <div class="overflow-x-auto mt-4 rounded-lg shadow dark:shadow-gray-800">
            <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
@@ -165,7 +194,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center text-gray-700 dark:text-gray-300 py-4">No matching data</td>
+                        <td colspan="7" class="text-center text-gray-700 dark:text-gray-300 py-4">No matching data</td>
                     </tr>
                 @endforelse
                </tbody>

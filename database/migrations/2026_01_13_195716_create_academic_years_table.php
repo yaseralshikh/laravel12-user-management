@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('starts_on')->nullable();
             $table->date('ends_on')->nullable();
             $table->boolean('is_active')->default(false);
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
 
             $table->unique('name');
