@@ -9,4 +9,7 @@ return [
     'users_management' => ':management المستخدمين',
     'sectors_management' => ':management القطاعات',
     'schools_management' => ':management المدارس',
+    'academic_years_management' => ':management السنوات الدراسية',
+    'programs_management' => ':management البرامج',
+    'program_cycles_management' => ':management دورات البرنامج',
 ];

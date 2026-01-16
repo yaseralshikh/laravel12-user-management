@@ -35,4 +35,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.','middleware' => ['au
     Volt::route('users', 'users.users-index')->name('users.index');
     Volt::route('schools', 'schools.schools-index')->name('schools.index');
     Volt::route('sectors', 'sectors.sectors-index')->name('sectors.index');
+    Volt::route('academic-years', 'academic-years.academic-years-index')->name('academic-years.index');
+    Volt::route('program-cycles', 'program-cycles.program-cycles-index')->name('program-cycles.index');
+    Volt::route('programs', 'programs.programs-index')->name('programs.index');
 });

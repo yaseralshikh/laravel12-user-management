@@ -16,6 +16,9 @@ return [
             'users' => 'c,r,u,d',
             'schools' => 'c,r,u,d',
             'sectors' => 'c,r,u,d',
+            'academic_years' => 'c,r,u,d',
+            'programs' => 'c,r,u,d',
+            'program_cycles' => 'c,r,u,d',
             'profile' => 'r,u',
         ],
         'admin' => [

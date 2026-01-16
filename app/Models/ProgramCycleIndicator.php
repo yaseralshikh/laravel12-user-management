@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProgramCycleIndicator extends Model
 {
@@ -13,4 +14,12 @@ class ProgramCycleIndicator extends Model
         'actual_value',
         'notes',
     ];
+
+    /**
+     * Get the program cycle that owns this indicator.
+     */
+    public function programCycle(): BelongsTo
+    {
+        return $this->belongsTo(ProgramCycle::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Program extends Model
 {
@@ -11,4 +12,12 @@ class Program extends Model
         'description',
         'status',
     ];
+
+    /**
+     * Get all program cycles for this program.
+     */
+    public function programCycles(): HasMany
+    {
+        return $this->hasMany(ProgramCycle::class);
+    }
 }
