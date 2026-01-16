@@ -4,38 +4,41 @@
         @include('partials.head')
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+        <flux:sidebar sticky stashable collapsible="desktop" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-            <a href="{{ route('home') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
-                <x-app-logo />
-            </a>
+            <flux:sidebar.header>
+                <a href="{{ route('home') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+                    <x-app-logo />
+                </a>
 
-            <flux:navlist variant="outline">
-                <flux:navlist.group  class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    @role('superadmin')
-                        <flux:navlist.item icon="map" :href="route('dashboard.sectors.index')" :current="request()->is('dashboard/sectors')" wire:navigate>{{ __('messages.sectors_management',['management' => '']) }}</flux:navlist.item>
-                        <flux:navlist.item icon="users" :href="route('dashboard.users.index')" :current="request()->is('dashboard/users')" wire:navigate>{{ __('messages.users_management',['management' => '']) }}</flux:navlist.item>
-                        <flux:navlist.item icon="building-office-2" :href="route('dashboard.schools.index')" :current="request()->is('dashboard/schools')" wire:navigate>{{ __('messages.schools_management',['management' => '']) }}</flux:navlist.item>
-                    @endrole
-                </flux:navlist.group>
-            </flux:navlist>
+                <flux:sidebar.collapse class="ms-auto" />
+            </flux:sidebar.header>
 
-            <flux:spacer />
-
-            <flux:navlist variant="outline">
-                {{-- <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                {{ __('Documentation') }}
-                </flux:navlist.item> --}}
+            <flux:sidebar.nav>
+                <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:sidebar.item>
                 @role('superadmin')
-                    <flux:navlist.item icon="shield-check" :href="url('/laratrust')" :current="request()->is('laratrust')" wire:navigate>{{ __('Laratrust') }}</flux:navlist.item>
+                    <flux:sidebar.item icon="map" :href="route('dashboard.sectors.index')" :current="request()->is('dashboard/sectors')" wire:navigate>{{ __('messages.sectors_management',['management' => '']) }}</flux:sidebar.item>
+                    <flux:sidebar.item icon="users" :href="route('dashboard.users.index')" :current="request()->is('dashboard/users')" wire:navigate>{{ __('messages.users_management',['management' => '']) }}</flux:sidebar.item>
+                    <flux:sidebar.item icon="building-office-2" :href="route('dashboard.schools.index')" :current="request()->is('dashboard/schools')" wire:navigate>{{ __('messages.schools_management',['management' => '']) }}</flux:sidebar.item>
                 @endrole
-            </flux:navlist>
+            </flux:sidebar.nav>
+
+            <flux:sidebar.spacer />
+
+            <flux:sidebar.nav>
+                {{-- <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
+                {{ __('Repository') }}
+                </flux:sidebar.item>
+
+                <flux:sidebar.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
+                {{ __('Documentation') }}
+                </flux:sidebar.item> --}}
+                @role('superadmin')
+                    <flux:sidebar.item icon="shield-check" :href="url('/laratrust')" :current="request()->is('laratrust')" wire:navigate>{{ __('Laratrust') }}</flux:sidebar.item>
+                @endrole
+            </flux:sidebar.nav>
 
             <!-- Desktop User Menu -->
             <flux:dropdown class="hidden lg:block" position="bottom" align="start">

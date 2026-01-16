@@ -19,14 +19,12 @@ class AcademicYearSeeder extends Seeder
                 'name' => '2024-2025',
                 'starts_on' => Carbon::create('2024', '09', '01'),
                 'ends_on' => Carbon::create('2025', '06', '30'),
-                'is_active' => false,
                 'status' => 'inactive',
             ],
             [
                 'name' => '2025-2026',
                 'starts_on' => Carbon::create('2025', '09', '01'),
                 'ends_on' => Carbon::create('2026', '06', '30'),
-                'is_active' => true,
                 'status' => 'active',
             ],
         ];
@@ -37,7 +35,6 @@ class AcademicYearSeeder extends Seeder
                 [
                     'starts_on' => $year['starts_on'],
                     'ends_on' => $year['ends_on'],
-                    'is_active' => $year['is_active'],
                     'status' => $year['status'],
                 ]
             );

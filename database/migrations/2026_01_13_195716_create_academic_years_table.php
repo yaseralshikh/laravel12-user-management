@@ -16,12 +16,11 @@ return new class extends Migration
             $table->string('name'); // مثال: 2025-2026
             $table->date('starts_on')->nullable();
             $table->date('ends_on')->nullable();
-            $table->boolean('is_active')->default(false);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
 
             $table->unique('name');
-            $table->index('is_active');
+            $table->index('status');
         });
     }
 

@@ -11,6 +11,5 @@ class AcademicYear extends Model
         'starts_on',
         'ends_on',
         'status',
-        'is_active',
     ];
 }

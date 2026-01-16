@@ -6,6 +6,7 @@ return [
     'accept'          => 'موافقة',
     'action'          => 'إجراء',
     'actions'         => 'أجراءات',
+    'Settings'        => 'الإعدادات',
     'add'             => 'إضافة',
     'admin'           => 'مدير',
     'agree'           => 'موافقة',
