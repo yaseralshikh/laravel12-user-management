@@ -93,5 +93,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(SchoolSeeder::class);
         $this->call(AcademicYearSeeder::class);
+        $this->call(ProgramSeeder::class);
     }
 }

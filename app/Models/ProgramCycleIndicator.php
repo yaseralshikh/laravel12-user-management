@@ -22,4 +22,15 @@ class ProgramCycleIndicator extends Model
     {
         return $this->belongsTo(ProgramCycle::class);
     }
+
+    /**
+     * Get the program through the program cycle.
+     */
+    public function program()
+    {
+        return $this->belongsToThrough(
+            Program::class,
+            ProgramCycle::class
+        );
+    }
 }

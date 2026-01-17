@@ -70,4 +70,19 @@ class School extends Model
     {
         return $this->hasMany(Visit::class);
     }
+
+    /**
+     * Get all work events at this school.
+     */
+    public function workEvents()
+    {
+        return $this->hasManyThrough(
+            WorkEvent::class,
+            Visit::class,
+            'school_id',  // Foreign key in visits table
+            'user_id',    // Local key in work_events table
+            'id',         // Local key in schools table
+            'user_id'     // Foreign key in visits table
+        );
+    }
 }

@@ -19,6 +19,8 @@ return [
             'academic_years' => 'c,r,u,d',
             'programs' => 'c,r,u,d',
             'program_cycles' => 'c,r,u,d',
+            'visits' => 'c,r,u,d',
+            'work_events' => 'c,r,u,d',
             'profile' => 'r,u',
         ],
         'admin' => [

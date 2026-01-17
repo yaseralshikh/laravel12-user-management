@@ -66,7 +66,7 @@ class User extends Authenticatable implements LaratrustUser
         return Str::of($this->name)
             ->explode(' ')
             ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
+            ->map(fn($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
 
@@ -83,5 +83,54 @@ class User extends Authenticatable implements LaratrustUser
     public function sector()
     {
         return $this->belongsTo(Sector::class);
+    }
+
+    /**
+     * Get all visits conducted by this user.
+     */
+    public function visits()
+    {
+        return $this->hasMany(Visit::class);
+    }
+
+    /**
+     * Get all work events organized by this user.
+     */
+    public function workEvents()
+    {
+        return $this->hasMany(WorkEvent::class);
+    }
+
+    /**
+     * Get all visit attachments uploaded by this user.
+     */
+    public function uploadedAttachments()
+    {
+        return $this->hasMany(VisitAttachment::class, 'uploaded_by');
+    }
+
+    /**
+     * Get all schools where this user is coordinator.
+     */
+    public function coordinatedSchools()
+    {
+        return $this->hasMany(School::class, 'coordinator_id');
+    }
+
+    /**
+     * Get all schools where this user is principal.
+     */
+    public function principalSchools()
+    {
+        return $this->hasMany(School::class, 'principal_id');
+    }
+
+    /**
+     * Get all schools (both as coordinator and principal).
+     */
+    public function allAssociatedSchools()
+    {
+        return $this->schoolsAsCoordinator()
+            ->union($this->schoolsAsPrincipal()->getQuery());
     }
 }

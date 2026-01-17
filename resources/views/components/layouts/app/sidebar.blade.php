@@ -20,13 +20,27 @@
                 <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:sidebar.item>
                 @role('superadmin')
                 <flux:sidebar.item icon="users" :href="route('dashboard.users.index')" :current="request()->is('dashboard/users')" wire:navigate>{{ __('messages.users_management',['management' => '']) }}</flux:sidebar.item>
-                    <flux:sidebar.item icon="map" :href="route('dashboard.sectors.index')" :current="request()->is('dashboard/sectors')" wire:navigate>{{ __('messages.sectors_management',['management' => '']) }}</flux:sidebar.item>
-                    <flux:sidebar.item icon="calendar-days" :href="route('dashboard.academic-years.index')" :current="request()->is('dashboard/academic-years')" wire:navigate>{{ __('messages.academic_years_management',['management' => '']) }}</flux:sidebar.item>
-                    <flux:sidebar.item icon="building-office-2" :href="route('dashboard.schools.index')" :current="request()->is('dashboard/schools')" wire:navigate>{{ __('messages.schools_management',['management' => '']) }}</flux:sidebar.item>
-                    <flux:sidebar.item icon="book-open" :href="route('dashboard.programs.index')" :current="request()->is('dashboard/programs')" wire:navigate>{{ __('messages.programs_management',['management' => '']) }}</flux:sidebar.item>
+                    <flux:sidebar.item icon="map" :href="route('dashboard.sectors.index')" :current="request()->is('dashboard/sectors')" wire:navigate>
+                        {{ __('messages.sectors_management',['management' => '']) }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="calendar-days" :href="route('dashboard.academic-years.index')" :current="request()->is('dashboard/academic-years')" wire:navigate>
+                        {{ __('messages.academic_years_management',['management' => '']) }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="building-office-2" :href="route('dashboard.schools.index')" :current="request()->is('dashboard/schools')" wire:navigate>
+                        {{ __('messages.schools_management',['management' => '']) }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="book-open" :href="route('dashboard.programs.index')" :current="request()->is('dashboard/programs')" wire:navigate>
+                        {{ __('messages.programs_management',['management' => '']) }}
+                    </flux:sidebar.item>
                     <flux:sidebar.item icon="arrow-path" :href="route('dashboard.program-cycles.index')" :current="request()->is('dashboard/program-cycles')" wire:navigate>
                         {{ __('messages.program_cycles_management',['management' => '']) }}
-                    </flux:sidebar.item>                    
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="check" :href="route('dashboard.visits.index')" :current="request()->is('dashboard/visits')" wire:navigate>
+                        {{ __('messages.visits_management',['management' => '']) }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="calendar" :href="route('dashboard.work-events.index')" :current="request()->is('dashboard/work-events')" wire:navigate>
+                        {{ __('messages.work_events_management',['management' => '']) }}
+                    </flux:sidebar.item>          
                 @endrole
             </flux:sidebar.nav>
 

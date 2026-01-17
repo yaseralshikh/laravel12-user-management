@@ -12,4 +12,6 @@ return [
     'academic_years_management' => ':management السنوات الدراسية',
     'programs_management' => ':management البرامج',
     'program_cycles_management' => ':management دورات البرنامج',
+    'visits_management' => ':management الزيارات',
+    'work_events_management' => ':management الأحداث العملية',
 ];
