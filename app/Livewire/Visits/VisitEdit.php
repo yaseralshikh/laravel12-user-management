@@ -61,7 +61,7 @@ class VisitEdit extends Component
                 ->where('stage', $this->stage);
         }
 
-        return view('livewire.visits.visit_edit', [
+        return view('livewire.visits.visit-edit', [
             'sectors' => Sector::where('status', 'active')->orderBy('name')->get(),
             'stages' => School::where('status', 'نشط')
                 ->distinct()
@@ -120,6 +120,12 @@ class VisitEdit extends Component
         $this->recommendations = $visit->recommendations ?? '';
 
         Flux::modal('edit-visit')->show();
+    }
+
+    public function cancel()
+    {
+        Flux::modal('edit-visit')->close();
+        $this->reset();
     }
 
     public function save()

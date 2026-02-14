@@ -8,10 +8,10 @@
         <div class="mx-auto mb-6 h-1 w-full rounded bg-sky-500 dark:bg-gray-500"></div>
 
         {{-- for show Create modal --}}
-        <livewire:visits.visit_create />
+        <livewire:visits.visit-create />
 
         {{-- for show Edit modal --}}
-        <livewire:visits.visit_edit />
+        <livewire:visits.visit-edit />
 
         {{-- for show View modal --}}
         <livewire:visits.visit-view />

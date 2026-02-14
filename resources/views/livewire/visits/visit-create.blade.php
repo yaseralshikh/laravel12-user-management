@@ -1,94 +1,75 @@
-<div>
-    <h2>إضافة زيارة جديدة</h2>
-    
-    <form wire:submit="save">
+<flux:modal name="create-visit" class="md:w-96">
+    <flux:heading level="2">{{ __('Create Visit') }}</flux:heading>
+
+    <form wire:submit.prevent="save" class="space-y-6">
         <!-- Sector Select -->
-        <div>
-            <label>القطاع</label>
-            <select wire:model.live="sector_id">
-                <option value="">-- اختر --</option>
-                @foreach($sectors as $s)
-                    <option value="{{ $s->id }}">{{ $s->name }}</option>
-                @endforeach
-            </select>
-        </div>
+        <flux:select wire:model.live="sector_id" label="{{ __('Sector') }}" placeholder="{{ __('Select Sector') }}">
+            <option value="">{{ __('Select Sector') }}</option>
+            @foreach($sectors as $sector)
+                <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+            @endforeach
+        </flux:select>
 
         <!-- Stage Select -->
-        <div>
-            <label>المرحلة الدراسية</label>
-            <select wire:model.live="stage">
-                <option value="">-- اختر --</option>
-                @foreach($stages as $st)
-                    <option value="{{ $st }}">{{ $st }}</option>
-                @endforeach
-            </select>
-        </div>
+        <flux:select wire:model.live="stage" label="{{ __('Academic Stage') }}" placeholder="{{ __('Select Stage') }}">
+            <option value="">{{ __('Select Stage') }}</option>
+            @foreach($stages as $stageValue)
+                <option value="{{ $stageValue }}">{{ $stageValue }}</option>
+            @endforeach
+        </flux:select>
 
-        <!-- School Select - Disabled until both selected -->
-        <div>
-            <label>المدرسة</label>
-            <select wire:model="school_id" {{ !$sector_id || !$stage ? 'disabled' : '' }}>
-                <option value="">-- اختر --</option>
-                @foreach($schools as $sch)
-                    <option value="{{ $sch->id }}">{{ $sch->name }}</option>
-                @endforeach
-            </select>
-            @if(!$sector_id || !$stage)
-                <p>يرجى اختيار القطاع والمرحلة الدراسية أولاً</p>
-            @endif
-        </div>
+        <!-- School Select -->
+        <flux:select wire:model.live="school_id" label="{{ __('School') }}" placeholder="{{ __('Select School') }}" :disabled="!$sector_id || !$stage">
+            <option value="">{{ __('Select School') }}</option>
+            @foreach($schools as $school)
+                <option value="{{ $school->id }}">{{ $school->name }}</option>
+            @endforeach
+        </flux:select>
 
-        <!-- Other fields -->
-        <div>
-            <label>المستخدم</label>
-            <select wire:model="user_id">
-                <option value="">-- اختر --</option>
-                @foreach($users as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                @endforeach
-            </select>
-        </div>
+        <!-- User Select -->
+        <flux:select wire:model="user_id" label="{{ __('User') }}" placeholder="{{ __('Select User') }}">
+            <option value="">{{ __('Select User') }}</option>
+            @foreach($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+            @endforeach
+        </flux:select>
 
-        <div>
-            <label>السنة الدراسية</label>
-            <select wire:model="academic_year_id">
-                <option value="">-- اختر --</option>
-                @foreach($academicYears as $ay)
-                    <option value="{{ $ay->id }}">{{ $ay->name }}</option>
-                @endforeach
-            </select>
-        </div>
+        <!-- Academic Year Select -->
+        <flux:select wire:model="academic_year_id" label="{{ __('Academic Year') }}" placeholder="{{ __('Select Year') }}">
+            <option value="">{{ __('Select Year') }}</option>
+            @foreach($academicYears as $year)
+                <option value="{{ $year->id }}">{{ $year->name }}</option>
+            @endforeach
+        </flux:select>
 
-        <div>
-            <label>تاريخ الزيارة</label>
-            <input type="date" wire:model="visit_date" />
-        </div>
+        <!-- Visit Date Input -->
+        <flux:input wire:model="visit_date" type="date" label="{{ __('Visit Date') }}" />
 
-        <div>
-            <label>نوع الزيارة</label>
-            <select wire:model="visit_type">
-                <option value="">-- اختر --</option>
-                @foreach($visitTypes as $k => $v)
-                    <option value="{{ $k }}">{{ $v }}</option>
-                @endforeach
-            </select>
-        </div>
+        <!-- Visit Type Select -->
+        <flux:select wire:model="visit_type" label="{{ __('Visit Type') }}" placeholder="{{ __('Select Type') }}">
+            <option value="">{{ __('Select Type') }}</option>
+            @foreach($visitTypes as $type => $label)
+                <option value="{{ $type }}">{{ $label }}</option>
+            @endforeach
+        </flux:select>
 
-        <div>
-            <label>الهدف</label>
-            <textarea wire:model="objective"></textarea>
-        </div>
+        <!-- Objective Textarea -->
+        <flux:textarea wire:model="objective" label="{{ __('Objective') }}" placeholder="{{ __('Enter visit objective') }}" />
 
-        <div>
-            <label>الملاحظات</label>
-            <textarea wire:model="notes"></textarea>
-        </div>
+        <!-- Notes Textarea -->
+        <flux:textarea wire:model="notes" label="{{ __('Notes') }}" placeholder="{{ __('Enter notes') }}" />
 
-        <div>
-            <label>التوصيات</label>
-            <textarea wire:model="recommendations"></textarea>
-        </div>
+        <!-- Recommendations Textarea -->
+        <flux:textarea wire:model="recommendations" label="{{ __('Recommendations') }}" placeholder="{{ __('Enter recommendations') }}" />
 
-        <button type="submit">إضافة الزيارة</button>
+        <!-- Form Actions -->
+        <div class="flex justify-end gap-2 pt-6 border-t">
+            <flux:button 
+                type="button" 
+                variant="ghost"
+                wire:click="cancel"
+            >{{ __('Cancel') }}</flux:button>
+            <flux:button type="submit" variant="primary">{{ __('Save') }}</flux:button>
+        </div>
     </form>
-</div>
+</flux:modal>

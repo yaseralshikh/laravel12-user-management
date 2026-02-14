@@ -28,7 +28,7 @@
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
-[$__name, $__params] = $__split('visits.visit_create', []);
+[$__name, $__params] = $__split('visits.visit-create', []);
 
 $key = null;
 
@@ -50,7 +50,7 @@ if (isset($__slots)) unset($__slots);
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
-[$__name, $__params] = $__split('visits.visit_edit', []);
+[$__name, $__params] = $__split('visits.visit-edit', []);
 
 $key = null;
 

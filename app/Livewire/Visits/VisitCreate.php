@@ -59,7 +59,7 @@ class VisitCreate extends Component
                 ->where('stage', $this->stage);
         }
 
-        return view('livewire.visits.visit_create', [
+        return view('livewire.visits.visit-create', [
             'sectors' => Sector::where('status', 'active')->orderBy('name')->get(),
             'stages' => School::where('status', 'نشط')
                 ->distinct()
@@ -94,6 +94,12 @@ class VisitCreate extends Component
     {
         $this->reset();
         $this->visit_date = now()->format('Y-m-d');
+    }
+
+    public function cancel()
+    {
+        Flux::modal('create-visit')->close();
+        $this->reset();
     }
 
     public function save()
