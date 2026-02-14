@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Visits;
 
+use App\Exports\VisitsExport;
 use App\Models\Visit;
 use App\Models\School;
 use App\Models\User;
@@ -29,7 +30,6 @@ class VisitsIndex extends Component
     public $programCycleFilter = '';
     public $dateFromFilter = '';
     public $dateToFilter = '';
-    public $statusFilter = '';
 
     public function updatedTerm()
     {
@@ -127,18 +127,22 @@ class VisitsIndex extends Component
     public function exportExcel()
     {
         $data = $this->applyFilters(Visit::query())
-            ->with(['user', 'school', 'academicYear'])
+            ->with(['user', 'school', 'academicYear', 'programCycle.program'])
             ->orderBy($this->sortField, $this->sortDirection)
             ->get();
 
-        // يمكن إضافة ExportClass مخصصة لاحقاً
-        $this->dispatch('showSuccessAlert', message: 'جاري تحضير الملف...');
+        $export = new VisitsExport();
+        $file = $export->export($data);
+
+        $this->dispatch('showSuccessAlert', message: 'تم إنشاء الملف بنجاح!');
+
+        return response()->download(public_path($file))->deleteFileAfterSend(true);
     }
 
     public function exportPdf()
     {
         $data = $this->applyFilters(Visit::query())
-            ->with(['user', 'school', 'academicYear', 'programCycle'])
+            ->with(['user', 'school', 'academicYear', 'programCycle.program'])
             ->orderBy($this->sortField, $this->sortDirection)
             ->get();
 

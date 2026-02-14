@@ -30,8 +30,8 @@ class VisitCreate extends Component
     #[Validate('nullable|exists:academic_years,id')]
     public $academic_year_id = '';
 
-    #[Validate('nullable|array|exists:program_cycles,id')]
-    public array $program_cycle_ids = [];
+    #[Validate('nullable|exists:program_cycles,id')]
+    public $program_cycle_id = '';
 
     #[Validate('required|date')]
     public $visit_date = '';
@@ -71,7 +71,6 @@ class VisitCreate extends Component
             'users' => User::where('status', 'active')->orderBy('name')->get(),
             'academicYears' => AcademicYear::where('status', 'active')->orderBy('name')->get(),
             'programCycles' => ProgramCycle::whereIn('status', ['active', 'in_progress'])->with('program')->orderBy('term')->get(),
-            'programs' => \App\Models\Program::where('status', 'active')->orderBy('name')->get(),
             'visitTypes' => [
                 'فنية' => 'فنية',
                 'إدارية' => 'إدارية',
@@ -107,19 +106,17 @@ class VisitCreate extends Component
         $this->validate();
 
         try {
-            $visit = Visit::create([
+            Visit::create([
                 'school_id' => $this->school_id,
                 'user_id' => $this->user_id,
                 'academic_year_id' => $this->academic_year_id,
-                'program_cycle_id' => null,
+                'program_cycle_id' => $this->program_cycle_id ?: null,
                 'visit_date' => $this->visit_date,
                 'visit_type' => $this->visit_type,
                 'objective' => $this->objective,
                 'notes' => $this->notes,
                 'recommendations' => $this->recommendations,
             ]);
-
-            $visit->programCycles()->sync($this->program_cycle_ids);
 
             Flux::modal('create-visit')->close();
             $this->reset();

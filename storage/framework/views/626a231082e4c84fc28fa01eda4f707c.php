@@ -670,6 +670,7 @@ if (isset($__slots)) unset($__slots);
 <?php endif; ?>
                 </div>
             </div>
+        </div>
 
         <style>
             [x-cloak] { display:none !important; }

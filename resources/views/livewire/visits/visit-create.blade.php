@@ -42,6 +42,14 @@
             @endforeach
         </flux:select>
 
+        <!-- Program Cycle Select -->
+        <flux:select wire:model="program_cycle_id" label="{{ __('Program Cycle') }}" placeholder="{{ __('Select Program Cycle') }}">
+            <option value="">{{ __('Select Program Cycle') }}</option>
+            @foreach($programCycles as $cycle)
+                <option value="{{ $cycle->id }}">{{ $cycle->program->name }} - {{ $cycle->term }}</option>
+            @endforeach
+        </flux:select>
+
         <!-- Visit Date Input -->
         <flux:input wire:model="visit_date" type="date" label="{{ __('Visit Date') }}" />
 

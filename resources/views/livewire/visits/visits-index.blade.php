@@ -155,6 +155,7 @@
                         label="إلى" />
                 </div>
             </div>
+        </div>
 
         <style>
             [x-cloak] { display:none !important; }
