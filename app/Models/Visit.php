@@ -59,4 +59,9 @@ class Visit extends Model
     {
         return $this->hasMany(VisitAttachment::class);
     }
+
+    public function programCycles()
+    {
+        return $this->belongsToMany(ProgramCycle::class);
+    }
 }

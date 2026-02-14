@@ -17,9 +17,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete();
             $table->foreignId('academic_year_id')->constrained('academic_years')->restrictOnDelete();
 
-            // إن رغبت: ربط اختياري بنسخة برنامج في نفس العام (ليس إلزاميًا)
-            $table->foreignId('program_cycle_id')->nullable()->constrained('program_cycles')->nullOnDelete();
-
             $table->date('visit_date');
             $table->string('visit_type');
             $table->string('objective')->nullable();

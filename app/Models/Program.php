@@ -22,6 +22,12 @@ class Program extends Model
         return $this->hasMany(ProgramCycle::class);
     }
 
+    public function visits()
+    {
+        return $this->belongsToMany(Visit::class, 'program_cycle_visit', 'program_cycle_id', 'visit_id')
+            ->using(ProgramCycle::class);
+    }
+
     /**
      * Get all indicators through program cycles.
      */
@@ -32,19 +38,6 @@ class Program extends Model
             ProgramCycle::class,
             'program_id',      // Foreign key on program_cycles table
             'program_cycle_id' // Foreign key on program_cycle_indicators table
-        );
-    }
-
-    /**
-     * Get all visits through program cycles.
-     */
-    public function visits(): HasManyThrough
-    {
-        return $this->hasManyThrough(
-            Visit::class,
-            ProgramCycle::class,
-            'program_id',      // Foreign key on program_cycles table
-            'program_cycle_id' // Foreign key on visits table
         );
     }
 

@@ -91,15 +91,15 @@ class VisitsIndex extends Component
 
     public function view($visitId)
     {
-        if ($visit = Visit::with(['user', 'school', 'academicYear', 'programCycle', 'attachments'])->find($visitId)) {
-            $this->dispatch('openViewModal', ['visit' => $visit]);
+        if (Visit::with(['user', 'school', 'academicYear', 'programCycle', 'attachments'])->find($visitId)) {
+            $this->dispatch('openViewModal', visit_id: $visitId);
         }
     }
 
     public function edit($visitId)
     {
-        if ($visit = Visit::with(['user', 'school', 'academicYear', 'programCycle'])->find($visitId)) {
-            $this->dispatch('openEditModal', ['visit' => $visit]);
+        if (Visit::with(['user', 'school', 'academicYear', 'programCycle'])->find($visitId)) {
+            $this->dispatch('openEditModal', visit_id: $visitId);
         }
     }
 
@@ -183,10 +183,10 @@ class VisitsIndex extends Component
                 'متابعة' => 'متابعة',
                 'أخرى' => 'أخرى'
             ],
-            'schools' => School::where('status', 'active')->orderBy('name')->get(),
+            'schools' => School::where('status', 'نشط')->orderBy('name')->get(),
             'users' => User::where('status', 'active')->orderBy('name')->get(),
             'academicYears' => AcademicYear::where('status', 'active')->orderBy('name')->get(),
-            'programCycles' => ProgramCycle::where('status', 'active')->with('program')->orderBy('term')->get(),
+            'programCycles' => ProgramCycle::whereIn('status', ['active', 'in_progress'])->with('program')->orderBy('term')->get(),
         ]);
     }
 

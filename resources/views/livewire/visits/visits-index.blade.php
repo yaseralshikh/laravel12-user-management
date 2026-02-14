@@ -8,10 +8,10 @@
         <div class="mx-auto mb-6 h-1 w-full rounded bg-sky-500 dark:bg-gray-500"></div>
 
         {{-- for show Create modal --}}
-        <livewire:visits.visit-create />
+        <livewire:visits.visit_create />
 
         {{-- for show Edit modal --}}
-        <livewire:visits.visit-edit />
+        <livewire:visits.visit_edit />
 
         {{-- for show View modal --}}
         <livewire:visits.visit-view />
@@ -85,8 +85,8 @@
             </div>
         </div>
 
-        {{-- فلاتر التصنيف --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-4">
+        {{-- فلاتر التصنيف - الصف الأول --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
             {{-- نوع الزيارة --}}
             <flux:select
                 wire:model.live="visitTypeFilter"
@@ -116,7 +116,10 @@
                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                 @endforeach
             </flux:select>
+        </div>
 
+        {{-- فلاتر التصنيف - الصف الثاني --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
             {{-- السنة الدراسية --}}
             <flux:select
                 wire:model.live="academicYearFilter"
@@ -137,100 +140,97 @@
                 @endforeach
             </flux:select>
 
-            {{-- من التاريخ إلى التاريخ في صف واحد --}}
-            <div class="flex gap-2">
-                <flux:input
-                    type="date"
-                    wire:model.live="dateFromFilter"
-                    label="من" />
-                <flux:input
-                    type="date"
-                    wire:model.live="dateToFilter"
-                    label="إلى" />
+            {{-- من التاريخ إلى التاريخ --}}
+            <div class="flex gap-2 items-end">
+                <div class="flex-1">
+                    <flux:input
+                        type="date"
+                        wire:model.live="dateFromFilter"
+                        label="من" />
+                </div>
+                <div class="flex-1">
+                    <flux:input
+                        type="date"
+                        wire:model.live="dateToFilter"
+                        label="إلى" />
+                </div>
             </div>
-        </div>
 
         <style>
             [x-cloak] { display:none !important; }
         </style>
-
-        {{-- جدول عرض الزيارات --}}
-        <div class="overflow-x-auto mt-4 rounded-lg shadow dark:shadow-gray-800">
-            <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-                <thead class="text-xs uppercase bg-sky-500/10 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 text-center">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('visit_date')">
-                            التاريخ
-                            @if($sortField === 'visit_date')
-                                @if($sortDirection === 'asc') ↑ @else ↓ @endif
-                            @endif
-                        </th>
-                        <th scope="col" class="px-6 py-3">المدرسة</th>
-                        <th scope="col" class="px-6 py-3">المستخدم</th>
-                        <th scope="col" class="px-6 py-3">نوع الزيارة</th>
-                        <th scope="col" class="px-6 py-3">الهدف</th>
-                        <th scope="col" class="px-6 py-3">السنة الدراسية</th>
-                        <th scope="col" class="px-6 py-3 w-70">الإجراءات</th>
+    </div>
+    {{-- جدول عرض الزيارات --}}
+    <div class="overflow-x-auto mt-4 rounded-lg shadow dark:shadow-gray-800">
+        <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+            <thead class="text-base uppercase bg-sky-500/10 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 font-bold">
+                <tr>
+                    <th scope="col" class="px-8 py-5 cursor-pointer text-center whitespace-nowrap" wire:click="sortBy('visit_date')">
+                        التاريخ
+                        @if($sortField === 'visit_date')
+                            @if($sortDirection === 'asc') ↑ @else ↓ @endif
+                        @endif
+                    </th>
+                    <th scope="col" class="px-8 py-5 text-center whitespace-nowrap">المدرسة</th>
+                    <th scope="col" class="px-8 py-5 text-center whitespace-nowrap">المستخدم</th>
+                    <th scope="col" class="px-8 py-5 text-center whitespace-nowrap">نوع الزيارة</th>
+                    <th scope="col" class="px-8 py-5 text-center whitespace-nowrap">الهدف</th>
+                    <th scope="col" class="px-8 py-5 text-center whitespace-nowrap">السنة الدراسية</th>
+                    <th scope="col" class="px-8 py-5 text-center whitespace-nowrap">الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($visits as $visit)
+                    <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-800 dark:even:bg-gray-700/50 border-b-2 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600/50 transition" wire:key="visit-{{ $visit->id }}">
+                        <td class="px-8 py-4 text-center text-gray-700 dark:text-gray-300 whitespace-nowrap font-semibold">{{ \Carbon\Carbon::parse($visit->visit_date)->format('Y-m-d') }}</td>
+                        <td class="px-8 py-4 text-center">
+                            <flux:badge color="blue" class="text-base px-3 py-2">{{ $visit->school->name }}</flux:badge>
+                        </td>
+                        <td class="px-8 py-4 text-center text-gray-700 dark:text-gray-300 font-medium">{{ $visit->user->name }}</td>
+                        <td class="px-8 py-4 text-center">
+                            <flux:badge color="purple" class="text-base px-3 py-2">{{ $visit->visit_type }}</flux:badge>
+                        </td>
+                        <td class="px-8 py-4 text-center text-gray-700 dark:text-gray-300">
+                            <span title="{{ $visit->objective }}">{{ Str::limit($visit->objective, 30) }}</span>
+                        </td>
+                        <td class="px-8 py-4 text-center text-gray-700 dark:text-gray-300 font-medium">{{ $visit->academicYear->name }}</td>
+                        <td class="px-8 py-4">
+                            <div class="flex gap-3 items-center justify-center">
+                                <flux:button
+                                    variant="ghost"
+                                    icon="eye"
+                                    wire:click="view({{ $visit->id }})"
+                                    title="عرض الزيارة"
+                                    class="text-xl" />
+                                
+                                <flux:button
+                                    icon="pencil-square"
+                                    wire:click="edit({{ $visit->id }})"
+                                    title="تحديث الزيارة"
+                                    class="text-xl" />
+                                
+                                <flux:button
+                                    variant="ghost"
+                                    icon="trash"
+                                    wire:click="delete({{ $visit->id }})"
+                                    title="حذف الزيارة"
+                                    class="text-xl" />
+                            </div>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @forelse ($visits as $visit)
-                        <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-800 dark:even:bg-gray-700/50 border-b border-gray-200 dark:border-gray-600 text-center" wire:key="visit-{{ $visit->id }}">
-                            <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ \Carbon\Carbon::parse($visit->visit_date)->format('Y-m-d') }}</td>
-                            <td class="px-6 py-2 text-gray-700 dark:text-gray-300">
-                                <flux:badge color="blue">{{ $visit->school->name }}</flux:badge>
-                            </td>
-                            <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $visit->user->name }}</td>
-                            <td class="px-6 py-2 text-gray-700 dark:text-gray-300">
-                                <flux:badge color="purple">{{ $visit->visit_type }}</flux:badge>
-                            </td>
-                            <td class="px-6 py-2 text-gray-700 dark:text-gray-300">
-                                {{ Str::limit($visit->objective, 30) }}
-                            </td>
-                            <td class="px-6 py-2 text-gray-700 dark:text-gray-300">{{ $visit->academicYear->name }}</td>
-                            <td class="px-6 py-2 space-x-1">
-                                @permission('visits-view')
-                                    <flux:button
-                                        size="sm"
-                                        variant="ghost"
-                                        icon="eye"
-                                        wire:click="view({{ $visit->id }})"
-                                        title="عرض" />
-                                @endpermission
+                @empty
+                    <tr>
+                        <td colspan="7" class="px-8 py-12 text-center text-gray-500 dark:text-gray-400 text-lg">
+                            لا توجد زيارات
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 
-                                @permission('visits-edit')
-                                    <flux:button
-                                        size="sm"
-                                        variant="ghost"
-                                        icon="pencil"
-                                        wire:click="edit({{ $visit->id }})"
-                                        title="تعديل" />
-                                @endpermission
-
-                                @permission('visits-delete')
-                                    <flux:button
-                                        size="sm"
-                                        variant="ghost"
-                                        icon="trash"
-                                        wire:click="delete({{ $visit->id }})"
-                                        title="حذف" />
-                                @endpermission
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
-                                لا توجد زيارات
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-
-        {{-- Pagination --}}
-        <div class="mt-4">
-            {{ $visits->links() }}
-        </div>
+    {{-- Pagination --}}
+    <div class="mt-6 text-base">
+        {{ $visits->links() }}
     </div>
 </div>
