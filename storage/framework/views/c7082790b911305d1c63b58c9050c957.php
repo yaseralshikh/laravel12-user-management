@@ -1,13 +1,13 @@
 <?php if (isset($component)) { $__componentOriginal8cc9d3143946b992b324617832699c5f = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal8cc9d3143946b992b324617832699c5f = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::modal.index','data' => ['name' => 'view-visit','class' => 'max-w-2xl']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::modal.index','data' => ['name' => 'view-visit','class' => 'w-[95vw] [:where(&)]:max-w-6xl']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('flux::modal'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['name' => 'view-visit','class' => 'max-w-2xl']); ?>
+<?php $component->withAttributes(['name' => 'view-visit','class' => 'w-[95vw] [:where(&)]:max-w-6xl']); ?>
     <div class="space-y-6">
         <div>
             <?php if (isset($component)) { $__componentOriginale0fd5b6a0986beffac17a0a103dfd7b9 = $component; } ?>
@@ -183,6 +183,49 @@
         <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
         <div class="flex gap-2 border-t border-gray-200 dark:border-gray-700 pt-6">
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($visit): ?>
+                <?php if (isset($component)) { $__componentOriginalc04b147acd0e65cc1a77f86fb0e81580 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc04b147acd0e65cc1a77f86fb0e81580 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::button.index','data' => ['wire:click' => 'downloadPdf','variant' => 'filled','class' => 'bg-green-600 hover:bg-green-700']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('flux::button'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['wire:click' => 'downloadPdf','variant' => 'filled','class' => 'bg-green-600 hover:bg-green-700']); ?>
+                    <?php if (isset($component)) { $__componentOriginal2ec15606c28ac475c0acbe5c53b8b490 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal2ec15606c28ac475c0acbe5c53b8b490 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::icon.arrow-down-tray','data' => ['class' => 'w-5 h-5']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('flux::icon.arrow-down-tray'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'w-5 h-5']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal2ec15606c28ac475c0acbe5c53b8b490)): ?>
+<?php $attributes = $__attributesOriginal2ec15606c28ac475c0acbe5c53b8b490; ?>
+<?php unset($__attributesOriginal2ec15606c28ac475c0acbe5c53b8b490); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal2ec15606c28ac475c0acbe5c53b8b490)): ?>
+<?php $component = $__componentOriginal2ec15606c28ac475c0acbe5c53b8b490; ?>
+<?php unset($__componentOriginal2ec15606c28ac475c0acbe5c53b8b490); ?>
+<?php endif; ?>
+                    تنزيل تقرير PDF
+                 <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc04b147acd0e65cc1a77f86fb0e81580)): ?>
+<?php $attributes = $__attributesOriginalc04b147acd0e65cc1a77f86fb0e81580; ?>
+<?php unset($__attributesOriginalc04b147acd0e65cc1a77f86fb0e81580); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc04b147acd0e65cc1a77f86fb0e81580)): ?>
+<?php $component = $__componentOriginalc04b147acd0e65cc1a77f86fb0e81580; ?>
+<?php unset($__componentOriginalc04b147acd0e65cc1a77f86fb0e81580); ?>
+<?php endif; ?>
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             <?php if (isset($component)) { $__componentOriginal4a4f7aa062a095c651c2f80bb685a42a = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal4a4f7aa062a095c651c2f80bb685a42a = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'e60dd9d2c3a62d619c9acb38f20d5aa5::spacer','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>

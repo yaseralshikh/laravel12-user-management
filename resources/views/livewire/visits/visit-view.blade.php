@@ -1,4 +1,4 @@
-<flux:modal name="view-visit" class="max-w-2xl">
+<flux:modal name="view-visit" class="w-[95vw] [:where(&)]:max-w-6xl">
     <div class="space-y-6">
         <div>
             <flux:heading size="lg">تفاصيل الزيارة</flux:heading>
@@ -113,6 +113,12 @@
         @endif
 
         <div class="flex gap-2 border-t border-gray-200 dark:border-gray-700 pt-6">
+            @if($visit)
+                <flux:button wire:click="downloadPdf" variant="filled" class="bg-green-600 hover:bg-green-700">
+                    <flux:icon.arrow-down-tray class="w-5 h-5" />
+                    تنزيل تقرير PDF
+                </flux:button>
+            @endif
             <flux:spacer />
             <flux:modal.close>
                 <flux:button variant="primary">إغلاق</flux:button>
